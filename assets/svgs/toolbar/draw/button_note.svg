@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>便签,贴纸</title>
+    <g id="Nearhub-白板模块" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="白板-已登录-工具条2" transform="translate(-3692.000000, -1164.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="便签,贴纸" transform="translate(3692.000000, 1164.000000)">
+                <path d="M48,1.5 L48,30 L33,30 C31.3453125,30 30,31.340625 30,33 L30,48 L1.5,48 C0.6703125,48 0,47.3296875 0,46.5 L0,1.5 C0,0.6703125 0.6703125,0 1.5,0 L46.5,0 C47.3296875,0 48,0.6703125 48,1.5 Z" id="路径"></path>
+                <path d="M47.728125,33 C47.5828125,33.3234375 47.3765625,33.6234375 47.11875,33.88125 L33.8765625,47.1234375 C33.61875,47.38125 33.3234375,47.5828125 32.9953125,47.7328125 L32.9953125,33 L47.728125,33 Z" id="路径"></path>
+            </g>
+        </g>
+    </g>
+</svg>

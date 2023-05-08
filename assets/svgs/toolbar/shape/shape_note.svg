@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="146px" height="146px" viewBox="0 0 146 146" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>便签,贴纸</title>
+    <defs>
+        <filter x="-9.4%" y="-9.5%" width="118.8%" height="118.9%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Nearhub-白板模块" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组-5备份" transform="translate(9.000000, 5.860926)" fill="#85D4A8" fill-rule="nonzero">
+            <g id="便签,贴纸" filter="url(#filter-1)" transform="translate(63.859935, 67.576141) rotate(-180.000000) translate(-63.859935, -67.576141) translate(0.000000, 4.106815)">
+                <path d="M127.71987,3.96683288 L127.71987,79.3366575 L87.8074105,79.3366575 C83.4045673,79.3366575 79.8249186,82.8820144 79.8249186,87.2703233 L79.8249186,126.938652 L3.99124593,126.938652 C1.78358803,126.938652 0,125.165974 0,122.971819 L0,3.96683288 C0,1.77267844 1.78358803,0 3.99124593,0 L123.728624,0 C125.936282,0 127.71987,1.77267844 127.71987,3.96683288 Z" id="路径"></path>
+                <path d="M126.996456,87.2703233 C126.609805,88.1256716 126.061008,88.9190382 125.375013,89.6008376 L90.1397948,124.620534 C89.4537995,125.302333 88.6680229,125.835377 87.7949379,126.23206 L87.7949379,87.2703233 L126.996456,87.2703233 Z" id="路径"></path>
+            </g>
+        </g>
+    </g>
+</svg>

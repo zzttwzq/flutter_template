@@ -1,0 +1,378 @@
+{
+  "周计划": {
+    "周计划_22": {
+      "zh_CN": "周一",
+      "en_US": "Monday"
+    },
+    "周计划_23": {
+      "zh_CN": "周二",
+      "en_US": "Tuesday"
+    },
+    "周计划_24": {
+      "zh_CN": "周三",
+      "en_US": "Wednesday"
+    },
+    "周计划_25": {
+      "zh_CN": "周四",
+      "en_US": "Thursday"
+    },
+    "周计划_26": {
+      "zh_CN": "周五",
+      "en_US": "friday"
+    },
+    "周计划_27": {
+      "zh_CN": "周计划/ Weekly Planner",
+      "en_US": "Weekly Planner"
+    },
+    "周计划_28": {
+      "zh_CN": "周六",
+      "en_US": "Saturday"
+    },
+    "周计划_29": {
+      "zh_CN": "周日",
+      "en_US": "sunday"
+    },
+    "周计划_37": {
+      "zh_CN": "想快速组织团队每周日程计划，不妨试试周计划模板，使用便利贴和图片\n打造一目了然的计划日程。\n\n\n",
+      "en_US": "If you want to quickly organize your team's weekly schedule, try the weekly plan template, using sticky notes and pictures\nCreate a plan schedule that is clear at a glance.\n\n\n"
+    }
+  },
+  "工作墙": {
+    "工作墙_7": {
+      "zh_CN": "成员 2",
+      "en_US": "member 2"
+    },
+    "工作墙_8": {
+      "zh_CN": "成员 3",
+      "en_US": "member 3"
+    },
+    "工作墙_9": {
+      "zh_CN": "成员 4",
+      "en_US": "member 4"
+    },
+    "工作墙_10": {
+      "zh_CN": "成员 5",
+      "en_US": "member 5"
+    },
+    "工作墙_11": {
+      "zh_CN": "在项目中使用此模板以了解团队的最新进展",
+      "en_US": "Use this template on your projects to stay updated on your team's progress"
+    },
+    "工作墙_12": {
+      "zh_CN": "轻松跟踪团队进度并可视化每个人的任务",
+      "en_US": "Easily track team progress and visualize everyone's tasks"
+    },
+    "工作墙_13": {
+      "zh_CN": "项目名称",
+      "en_US": "project name"
+    },
+    "工作墙_14": {
+      "zh_CN": "成员 1",
+      "en_US": "member 1"
+    },
+    "工作墙_15": {
+      "zh_CN": "工作墙",
+      "en_US": "work wall"
+    },
+    "工作墙_19": {
+      "zh_CN": "Step 1\n在开始之前，在【项目名称】中添加项目名称或团队名称。接着，为每个便利贴分配一个团队成员，便利贴的颜色即代表成员。\n\nStep 2\n1. 把项目必需完成的任务以便利贴的形式写在【待办事项】栏中。这些任务可以是项目特定时间内需要完成的任务。\n2. 将【待办事项】栏中的任务进行优先级排序。重要的任务应该放在最上面，不重要的任务放在最下面。\n3.为每个便利贴任务匹配成员色，以反映谁负责完成它。\n\nStep 3\n与团队确定多久确认一次项目任务进度，可以是每天、每周、每两周等。\n将当前正在处理的任务移动到【进行中】，将已完成的任务移动到【已完成】。\n每次核查项目进度时，检查每一个【进行中】的任务，并确保【待办事项】中的任务优先级排序符合实际要求。\n确认任务执行是否遇到阻碍，并从【待办事项】中分配新的任务。\n\n",
+      "en_US": "Step 1\nBefore starting, add the project name or team name in 【Project Name】. Next, assign a team member to each post-it, which is represented by the color of the post-it.\n\nStep 2\n1. Write the tasks that must be completed in the project in the form of post-it notes in the [to-do list] column. These tasks can be tasks that need to be completed within a specific time period of the project.\n2. Prioritize the tasks in the [To Do] column. Important tasks should be placed at the top and unimportant tasks at the bottom.\n3. Color-match each post-it task to reflect who is responsible for completing it.\n\nStep 3\nDetermine with the team how often to confirm project task progress, which could be daily, weekly, bi-weekly, etc.\nMove the task currently being processed to [In progress], and move the completed task to [Completed].\nEvery time you check the progress of the project, check each [in progress] task, and ensure that the priority order of the tasks in the [to-do list] meets the actual requirements.\nConfirm whether the execution of the task is hindered, and assign a new task from the [to-do list].\n\n"
+    },
+    "工作墙_20": {
+      "zh_CN": "User's Guide",
+      "en_US": "User's Guide"
+    },
+    "工作墙_21": {
+      "zh_CN": "使用指南",
+      "en_US": "Instructions"
+    },
+    "工作墙_22": {
+      "zh_CN": "已完成",
+      "en_US": "completed"
+    },
+    "工作墙_28": {
+      "zh_CN": "进行中",
+      "en_US": "processing"
+    },
+    "工作墙_31": {
+      "zh_CN": "待办事项",
+      "en_US": "to do list"
+    }
+  },
+  "每日站立会": {
+    "每日站立会_6": {
+      "zh_CN": "每日站立会/ Daily Standup",
+      "en_US": "Daily Standup"
+    },
+    "每日站立会_7": {
+      "zh_CN": "职员名称",
+      "en_US": "staff name"
+    },
+    "每日站立会_8": {
+      "zh_CN": "昨日工作总结",
+      "en_US": "Yesterday's work summary"
+    },
+    "每日站立会_9": {
+      "zh_CN": "今日工作安排",
+      "en_US": "Today's work schedule"
+    },
+    "每日站立会_10": {
+      "zh_CN": "是否存在工作阻碍",
+      "en_US": "Is there any obstacle to work"
+    },
+    "每日站立会_13": {
+      "zh_CN": "职员名称",
+      "en_US": "staff name"
+    },
+    "每日站立会_14": {
+      "zh_CN": "职员名称",
+      "en_US": "staff name"
+    },
+    "每日站立会_15": {
+      "zh_CN": "职员名称",
+      "en_US": "staff name"
+    },
+    "每日站立会_16": {
+      "zh_CN": "职员名称",
+      "en_US": "staff name"
+    },
+    "每日站立会_17": {
+      "zh_CN": "职员名称",
+      "en_US": "staff name"
+    },
+    "每日站立会_43": {
+      "zh_CN": "Step1 \n确认站立会议的时间和地点\n\nStep2\n准备简短议程，每日站立会时长控制在10-15分钟\n\nStep3 \n团队成员可以通过便利贴回答3个问题：\n1.本次会议之前，昨日工作总结？\n2.本次会议之后，今日工作安排？\n3.目前我是否遇到工作阻碍，需要帮助？\n",
+      "en_US": "Step1\nConfirm the time and location of the stand-up meeting\n\nStep2\nPrepare a short agenda and keep the daily stand-up time to 10-15 minutes\n\nStep3\nTeam members can answer 3 questions via sticky notes:\n1. Before this meeting, yesterday's work summary?\n2. After this meeting, today's work schedule?\n3. Am I currently facing work obstacles and need help?\n"
+    },
+    "每日站立会_44": {
+      "zh_CN": "每日站立会是 Scrum 实践中最具代表性的一个形式，站立会的目标是促进信息在\n团队内的共享和透明，敏捷团队可以使用模板来协调日常工作量，并确保每个团队\n成员都意识到工作障碍。\n\n\n",
+      "en_US": "The daily stand-up meeting is the most representative form of Scrum practice. The goal of the stand-up meeting is to promote information in the\nSharing and transparency within the team, agile teams can use templates to coordinate daily workloads and ensure that each team\nMembers are aware of barriers to work.\n\n\n"
+    },
+    "每日站立会_45": {
+      "zh_CN": "使用指南",
+      "en_US": "Instructions"
+    },
+    "每日站立会_46": {
+      "zh_CN": "User's Guide",
+      "en_US": "User's Guide"
+    }
+  },
+  "工作流程": {
+    "工作流程_5": {
+      "zh_CN": "暂停搁置",
+      "en_US": "pause pending"
+    },
+    "工作流程_6": {
+      "zh_CN": "进行中",
+      "en_US": "in progress"
+    },
+    "工作流程_7": {
+      "zh_CN": "需要审查",
+      "en_US": "need to review"
+    },
+    "工作流程_8": {
+      "zh_CN": "已完结",
+      "en_US": "closed"
+    },
+    "工作流程_9": {
+      "zh_CN": "Workflow （工作流程）",
+      "en_US": "Workflow"
+    },
+    "工作流程_19": {
+      "zh_CN": "无论是在每周例会还是月/季度例会，都可以使用工作流程模板清晰地了解进行中的、暂停搁置的、需要审查的和已完结的工作。\n除了使用便利贴，还可以通过「共享文件」上传工作内容，放置在相应的流程栏中。\n\n",
+      "en_US": "Whether in the weekly meeting or monthly/quarterly meeting, the workflow template can be used to clearly understand the work in progress, suspended, to be reviewed and completed.\n\nIn addition to using post it notes, you can also upload work content through Share File and place it in the corresponding process bar.\n\n"
+    }
+  },
+  "流程图": {
+    "流程图_1": {
+      "zh_CN": "Flowchart（流程图）",
+      "en_US": "Flowchart"
+    },
+    "流程图_3": {
+      "zh_CN": "绘制技巧：\n\n1- 在绘制过程中，同级别和同类的主题元素间建议保持一致样式，以增强内容的连贯性和一致性。此外，将同类元素进行分组和合并可以达到更清晰的结构层次。\n\n2- 通过对元素属性的对比设置，比如：形状、颜色、大小、文字样式等来增强主次信息间的对比和视觉呈现效果。\n\n3- 对齐元素会让内容整体显得更有条理，更容易形成视觉关联。按照一定的秩序进行对齐排列会让整张图的可读性大大提升。\n\n",
+      "en_US": "Drawing skills: \n\n1- In the drawing process, it is recommended to keep consistent styles between the same level and the same kind of theme elements to enhance the consistency and consistency of the content. In addition, grouping and merging similar elements can achieve a clearer structure level. \n\n2- Enhance the contrast and visual presentation effect between primary and secondary information through the contrast settings of element attributes, such as shape, color, size, text style, etc. \n\n3- Aligning elements will make the content more organized and easier to form visual associations. Aligning in a certain order will greatly improve the readability of the whole picture. \n\n"
+    },
+    "流程图_11": {
+      "zh_CN": "START",
+      "en_US": "START"
+    },
+    "流程图_13": {
+      "zh_CN": "no",
+      "en_US": "no"
+    },
+    "流程图_14": {
+      "zh_CN": " yes ",
+      "en_US": " yes "
+    },
+    "流程图_15": {
+      "zh_CN": " yes ",
+      "en_US": " yes "
+    },
+    "流程图_16": {
+      "zh_CN": "no",
+      "en_US": "no"
+    },
+    "流程图_17": {
+      "zh_CN": " yes ",
+      "en_US": " yes "
+    },
+    "流程图_18": {
+      "zh_CN": " yes ",
+      "en_US": " yes "
+    },
+    "流程图_19": {
+      "zh_CN": " yes ",
+      "en_US": " yes "
+    },
+    "流程图_21": {
+      "zh_CN": "User's Guide",
+      "en_US": "User's Guide"
+    },
+    "流程图_22": {
+      "zh_CN": "使用指南",
+      "en_US": "Instructions"
+    },
+    "流程图_23": {
+      "zh_CN": "使用流程图描述复杂的算法，系统，决策流程，工作流程或过程，\n将步骤显示为形状，将决策序列显示为连接箭头。\n",
+      "en_US": "Use flow charts to describe complex algorithms, systems, decision-making processes, workflows or processes,\nShow steps as shapes and decision sequences as connecting arrows.\n"
+    },
+    "流程图_24": {
+      "zh_CN": "A",
+      "en_US": "A"
+    },
+    "流程图_25": {
+      "zh_CN": "B",
+      "en_US": "B"
+    }
+  },
+  "逆向头脑风暴": {
+    "逆向头脑风暴_4": {
+      "zh_CN": "逆向头脑风暴",
+      "en_US": "Reverse brainstorming"
+    },
+    "逆向头脑风暴_5": {
+      "zh_CN": "逆向头脑风暴是一种促使团队思考问题而不是解决方案的方法，让团队预测项目过程中可能出现的问题。",
+      "en_US": "Reverse brainstorming is a method that prompts the team to think about the problem rather than the solution, allowing the team to anticipate problems that may arise during the course of the project."
+    },
+    "逆向头脑风暴_8": {
+      "zh_CN": "定义问题",
+      "en_US": "definition problem"
+    },
+    "逆向头脑风暴_9": {
+      "zh_CN": "批判思考问题",
+      "en_US": "critical thinking questions"
+    },
+    "逆向头脑风暴_10": {
+      "zh_CN": "收集想法",
+      "en_US": "collect ideas"
+    },
+    "逆向头脑风暴_11": {
+      "zh_CN": "批判思考想法",
+      "en_US": "think critically about ideas"
+    },
+    "逆向头脑风暴_12": {
+      "zh_CN": "确定解决方法",
+      "en_US": "determine the solution"
+    },
+    "逆向头脑风暴_15": {
+      "zh_CN": "想法",
+      "en_US": "idea"
+    },
+    "逆向头脑风暴_16": {
+      "zh_CN": "想法",
+      "en_US": "idea"
+    },
+    "逆向头脑风暴_17": {
+      "zh_CN": "想法",
+      "en_US": "idea"
+    },
+    "逆向头脑风暴_18": {
+      "zh_CN": "想法",
+      "en_US": "idea"
+    },
+    "逆向头脑风暴_19": {
+      "zh_CN": "想法",
+      "en_US": "idea"
+    },
+    "逆向头脑风暴_20": {
+      "zh_CN": "想法",
+      "en_US": "idea"
+    },
+    "逆向头脑风暴_21": {
+      "zh_CN": "方案",
+      "en_US": "formula"
+    },
+    "逆向头脑风暴_22": {
+      "zh_CN": "方案",
+      "en_US": "formula"
+    },
+    "逆向头脑风暴_23": {
+      "zh_CN": "方案",
+      "en_US": "formula"
+    },
+    "逆向头脑风暴_25": {
+      "zh_CN": "Step 1\n从【定义问题】开始，写下问题描述，以便每个参与者都了解问题。\n\n\nStep 2\n接下来，【批判思考问题】，与其去想解决问题的办法，不如去想可能导致问题恶化的原因或事情。\n\n\nStep 3 \n收集参与者的想法。\n\n\nStep 4\n批判性的讨论收集到的想法，并把它们转化为解决这些问题的方法。\n\n\nStep 5\n最后，评估这些想法。决定最初的问题的最佳解决方案。\n\n",
+      "en_US": "Step 1\nStarting with 【Define the problem】, write down the problem description so that everyone involved understands the problem.\n\n\nStep 2\nNext, 【Critical thinking about the problem】Instead of thinking about the solution to the problem, it is better to think about the reasons or things that may cause the problem to worsen.\n\n\nStep 3\nCollect participants' ideas.\n\n\nStep 4\nCritically discuss the ideas gathered and translate them into solutions to these problems.\n\n\nStep 5\nFinally, evaluate the ideas. Determine the best solution to the original problem.\n\n"
+    },
+    "逆向头脑风暴_27": {
+      "zh_CN": "使用指南",
+      "en_US": "Instructions"
+    },
+    "逆向头脑风暴_28": {
+      "zh_CN": "User's Guide",
+      "en_US": "User's Guide"
+    }
+  },
+  "22优先方法": {
+    "22优先方法_5": {
+      "zh_CN": "现在做",
+      "en_US": "do it now"
+    },
+    "22优先方法_9": {
+      "zh_CN": "高价值",
+      "en_US": "高价值"
+    },
+    "22优先方法_10": {
+      "zh_CN": "低付出",
+      "en_US": "high value"
+    },
+    "22优先方法_11": {
+      "zh_CN": "低价值",
+      "en_US": "low value"
+    },
+    "22优先方法_12": {
+      "zh_CN": "高付出",
+      "en_US": "high effort"
+    },
+    "22优先方法_13": {
+      "zh_CN": "2*2 Prioritization Method （2*2 优先方法）",
+      "en_US": "2*2 Prioritization Method"
+    },
+    "22优先方法_14": {
+      "zh_CN": "有时间再做",
+      "en_US": "have time to do it again"
+    },
+    "22优先方法_15": {
+      "zh_CN": "不做",
+      "en_US": "don't do"
+    },
+    "22优先方法_16": {
+      "zh_CN": "未来做",
+      "en_US": "future do"
+    },
+    "22优先方法_17": {
+      "zh_CN": "2×2的优先排序方法为团队提供了一个可视化的框架来确定下一步该做哪些项目。\n\n\n",
+      "en_US": "The 2×2 prioritization method provides the team with a visual framework to determine which projects to work on next.\n\n\n"
+    }
+  },
+  "22优先矩阵": {
+    "22优先矩阵_3": {
+      "zh_CN": "2*2 Prioritization Matrix （2*2 优先矩阵）",
+      "en_US": "2*2 Prioritization Matrix"
+    },
+    "22优先矩阵_10": {
+      "zh_CN": "使用优先级矩阵来帮助您的团队基于两个加权标准而不是主观意见来做出重要决策。\n\n\n",
+      "en_US": "Use a priority matrix to help your team make important decisions based on two weighted criteria rather than subjective opinions.\n\n\n"
+    }
+  }
+}
