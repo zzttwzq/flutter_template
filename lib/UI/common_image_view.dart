@@ -2,7 +2,7 @@
 
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -61,26 +61,26 @@ class CommonImageView extends StatelessWidget {
         color: color,
       );
     } else if (url != null && url!.isNotEmpty) {
-      return CachedNetworkImage(
-        height: height,
-        width: width,
-        fit: fit,
-        imageUrl: url!,
-        placeholder: (context, url) => Container(
-          height: 30,
-          width: 30,
-          child: LinearProgressIndicator(
-            color: Colors.grey.shade200,
-            backgroundColor: Colors.grey.shade100,
-          ),
-        ),
-        errorWidget: (context, url, error) => Image.asset(
-          placeHolder,
-          height: height,
-          width: width,
-          fit: fit,
-        ),
-      );
+      // return CachedNetworkImage(
+      //   height: height,
+      //   width: width,
+      //   fit: fit,
+      //   imageUrl: url!,
+      //   placeholder: (context, url) => Container(
+      //     height: 30,
+      //     width: 30,
+      //     child: LinearProgressIndicator(
+      //       color: Colors.grey.shade200,
+      //       backgroundColor: Colors.grey.shade100,
+      //     ),
+      //   ),
+      //   errorWidget: (context, url, error) => Image.asset(
+      //     placeHolder,
+      //     height: height,
+      //     width: width,
+      //     fit: fit,
+      //   ),
+      // );
     } else if (imagePath != null && imagePath!.isNotEmpty) {
       return Image.asset(
         imagePath!,

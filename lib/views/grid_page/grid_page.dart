@@ -1,4 +1,4 @@
-import 'package:app/UI/custom_appbar.dart';
+import 'package:app/ui/custom_appbar.dart';
 import 'package:app/utils/ui_util.dart';
 import 'package:app/views/grid_page/grid_page_controller.dart';
 import 'package:flutter/cupertino.dart';

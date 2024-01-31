@@ -8,7 +8,10 @@ class BasicDialog extends Dialog {
   final List<Widget> widgets; //内容
 
   const BasicDialog(
-      {super.key, required this.submitBtnTxt, required this.widgets, this.confirmFun});
+      {super.key,
+      required this.submitBtnTxt,
+      required this.widgets,
+      this.confirmFun});
 
   @override
   Widget build(BuildContext context) {

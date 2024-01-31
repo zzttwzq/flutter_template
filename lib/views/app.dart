@@ -14,7 +14,6 @@ import '../utils/toast_util.dart';
 class InitialBindings extends Bindings {
   @override
   void dependencies() {
-
     ListPageBinding().dependencies();
     GridPageBinding().dependencies();
     ScrollPageBinding().dependencies();

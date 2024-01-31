@@ -26,6 +26,8 @@
 	<string>$(PRODUCT_COPYRIGHT)</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>lv-qt-demo请求录音机权限用于语音对讲</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

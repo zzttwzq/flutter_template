@@ -10,18 +10,18 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  image_cropper: ^3.0.1
+  # image_cropper: ^3.0.1
   image_gallery_saver: ^1.7.1
   flutter_svg: ^1.1.0
   file_picker: ^5.0.1
   flutter_easyloading: ^3.0.5
   oktoast: ^3.3.1
   lottie: ^2.2.0
-  glassmorphism: ^3.0.0
+  # glassmorphism: ^3.0.0
   webview_flutter: ^3.0.4
   fl_chart: ^0.61.0
   flutter_smart_dialog: ^4.5.3+2
-  cached_network_image: ^3.2.3
+  # cached_network_image: ^3.2.3
   page_transition: ^2.0.9
   pull_to_refresh: ^2.0.0
 
@@ -34,13 +34,30 @@ dependencies:
   event_bus: ^2.0.0 # 通知
   nanoid: ^1.0.0
   device_info_plus:  # 获取本地设备信息
-  package_info_plus: ^1.4.2 # 获取包信息
+  # package_info_plus: ^1.4.2 # 获取包信息
   flustars: any # Flutter常用工具类库 目前包含SharedPreferences Util, Screen Util, Directory Util, Widget Util, Image Util。
   tobias: ^2.4.1
 #  fluwx:
   jpush_flutter: ^2.4.1
   flutter_sound: ^9.2.13
   local_auth: ^2.1.5
+
+  # audioplayers: 4.1.0
+  # flutter_webrtc: 
+  # record: ^5.0.4
+  # audio_service:
+
+  # https://pub.dev/packages/uuid
+  uuid: ">=3.0.7 <5.0.0"
+  path_provider: 
+  record_platform_interface: ^1.0.2
+  record_web: ^1.0.4
+  record_windows: ^1.0.2
+  record_linux: '>=0.5.0 <1.0.0'
+  record_android: ^1.0.4
+  record_darwin: ^1.0.1
+  audioplayers: 
+  # flutter_soloud: ^1.2.4
 
 dev_dependencies:
   flutter_test:

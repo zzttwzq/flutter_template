@@ -1,4 +1,4 @@
-import 'package:app/UI/custom_appbar.dart';
+import 'package:app/ui/custom_appbar.dart';
 import 'package:app/utils/ui_util.dart';
 import 'package:app/views/components/text_form.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-import 'package:app/UI/custom_appbar.dart';
+import 'package:app/ui/custom_appbar.dart';
 import 'package:app/utils/ui_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,8 +47,8 @@ class ListPage extends GetView with BaseUiMixin {
             onRefresh: listPageController.onRefresh,
             onLoading: listPageController.onLoading,
             child: ListView.builder(
-              itemBuilder: (c, i) =>
-                  Card(child: Center(child: Text(listPageController.list.value[i]))),
+              itemBuilder: (c, i) => Card(
+                  child: Center(child: Text(listPageController.list.value[i]))),
               itemExtent: 100.0,
               itemCount: listPageController.list.value.length,
             ),

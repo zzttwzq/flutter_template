@@ -1,7 +1,7 @@
 import 'package:app/const/image_const.dart';
 import 'package:app/views/splash/splash_controller.dart';
 import 'package:get/get.dart';
-import '../../UI/common_image_view.dart';
+import '../../ui/common_image_view.dart';
 import '../../utils/size_utils.dart';
 import 'package:flutter/material.dart';
 

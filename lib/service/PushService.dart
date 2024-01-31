@@ -2,10 +2,9 @@ import 'dart:convert';
 import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../UI/DialogFactory.dart';
+import '../ui/DialogFactory.dart';
 
 class PushService {
-
   static initJPUSH(context) async {
     await Permission.notification.request();
 

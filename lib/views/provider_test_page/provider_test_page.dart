@@ -1,5 +1,5 @@
 import 'package:app/views/provider_test_page/provider_test_page_provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 
 // import 'package:epub_viewer/epub_viewer.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class _DetailsState extends State<ProviderTestPage> {
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback(
-          (_) {
+      (_) {
         // Provider.of<DetailsProvider>(context, listen: false)
         //     .setEntry(widget.entry);
         // Provider.of<DetailsProvider>(context, listen: false)
@@ -45,10 +45,11 @@ class _DetailsState extends State<ProviderTestPage> {
           appBar: AppBar(
             actions: <Widget>[
               IconButton(
-                onPressed: () async {
-                },
+                onPressed: () async {},
                 icon: Icon(
-                  detailsProvider.faved ? Icons.confirmation_num : Icons.confirmation_num,
+                  detailsProvider.faved
+                      ? Icons.confirmation_num
+                      : Icons.confirmation_num,
                   color: detailsProvider.faved
                       ? Colors.red
                       : Theme.of(context).iconTheme.color,

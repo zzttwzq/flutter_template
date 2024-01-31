@@ -1,3 +1,5 @@
+import 'package:app/views/audio/audio.dart';
+import 'package:app/views/audio/audio_binding.dart';
 import 'package:app/views/grid_page/grid_page.dart';
 import 'package:app/views/grid_page/grid_page_binding.dart';
 import 'package:app/views/home_page/home_page_binding.dart';
@@ -8,9 +10,7 @@ import 'package:app/views/list_page/list_page_binding.dart';
 import 'package:app/views/login_page/login_page.dart';
 import 'package:app/views/login_page/login_page_binding.dart';
 import 'package:app/views/splash/splash_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:page_transition/page_transition.dart';
 
 import '../views/home_page/home_page.dart';
 import '../views/mine_page/mine_page.dart';
@@ -18,7 +18,7 @@ import '../views/mine_page/mine_page_binding.dart';
 import '../views/splash/splash_binding.dart';
 
 class AppRoute {
-  static String initialRoute = loginPage;
+  static String initialRoute = audioPage;
 
   static String splashPage = "/splashPage";
   static String loginPage = "/login";
@@ -28,6 +28,7 @@ class AppRoute {
   static String listPage = "/list";
   static String gridPage = "/grid";
   static String providerTestPage = "/providerTestPage";
+  static String audioPage = "/audio";
 
   static List<GetPage> pages = [
     GetPage(
@@ -39,11 +40,10 @@ class AppRoute {
         page: () => LoginPage(),
         bindings: [LoginPageBinding()]),
     GetPage(
-      name: indexPage,
-      page: () => IndexPage(),
-      bindings: [IndexPageBinding()],
-      transition: Transition.rightToLeft
-    ),
+        name: indexPage,
+        page: () => IndexPage(),
+        bindings: [IndexPageBinding()],
+        transition: Transition.rightToLeft),
     GetPage(
         name: minePage,
         page: () => const HomePage(),
@@ -53,13 +53,10 @@ class AppRoute {
         page: () => const MinePage(),
         bindings: [MinePageBinding()]),
     GetPage(
-        name: listPage,
-        page: () => ListPage(),
-        bindings: [ListPageBinding()]),
+        name: listPage, page: () => ListPage(), bindings: [ListPageBinding()]),
     GetPage(
-        name: gridPage,
-        page: () => GridPage(),
-        bindings: [GridPageBinding()]),
+        name: gridPage, page: () => GridPage(), bindings: [GridPageBinding()]),
+    GetPage(name: audioPage, page: () => Audio(), bindings: [AudioBinding()]),
   ];
 
   /// 跳转页面

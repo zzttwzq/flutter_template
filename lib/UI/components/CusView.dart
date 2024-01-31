@@ -81,7 +81,6 @@ class CusView extends State with WidgetsBindingObserver {
         centerTitle: false,
         elevation: elevation,
         backgroundColor: navBarBackground,
-        textTheme: navBarTextTheme,
         iconTheme: navBarIconTheme,
         // 右侧按钮图标
         actions: getNavRightBottom(),
@@ -93,7 +92,6 @@ class CusView extends State with WidgetsBindingObserver {
       title: Text(title),
       elevation: elevation,
       backgroundColor: navBarBackground,
-      textTheme: navBarTextTheme,
       iconTheme: navBarIconTheme,
       // 右侧按钮图标
       actions: getNavRightBottom(),
@@ -107,7 +105,6 @@ class CusView extends State with WidgetsBindingObserver {
         centerTitle: false,
         elevation: elevation,
         backgroundColor: navBarBackground,
-        textTheme: navBarTextTheme,
         iconTheme: navBarIconTheme,
         // 右侧按钮图标
         actions: getNavRightBottom(),
@@ -119,7 +116,6 @@ class CusView extends State with WidgetsBindingObserver {
       title: Text(title),
       elevation: elevation,
       backgroundColor: navBarBackground,
-      textTheme: navBarTextTheme,
       iconTheme: navBarIconTheme,
       // 右侧按钮图标
       actions: getNavRightBottom(),
@@ -132,7 +128,6 @@ class CusView extends State with WidgetsBindingObserver {
       title: Text(title),
       elevation: elevation,
       backgroundColor: navBarBackground,
-      textTheme: navBarTextTheme,
       iconTheme: navBarIconTheme,
     );
   }

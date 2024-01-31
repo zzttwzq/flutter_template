@@ -1,4 +1,4 @@
-import 'package:app/UI/custom_appbar.dart';
+import 'package:app/ui/custom_appbar.dart';
 import 'package:app/utils/ui_util.dart';
 import 'package:app/views/grid_page/grid_page.dart';
 import 'package:app/views/home_page/home_page.dart';
@@ -38,7 +38,8 @@ class _IndexPageState extends State<IndexPage> with BaseUiMixin {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
-                  icon: Icon(Icons.home, color: currentPage == 1 ? Colors.blue : Colors.black),
+                  icon: Icon(Icons.home,
+                      color: currentPage == 1 ? Colors.blue : Colors.black),
                   onPressed: () {
                     // indexPageController.changeTab(0);
                     // var list = [];
@@ -48,11 +49,10 @@ class _IndexPageState extends State<IndexPage> with BaseUiMixin {
                     setState(() {
                       currentPage = 1;
                     });
-
-
                   }),
               IconButton(
-                  icon: Icon(Icons.person, color: currentPage == 2 ? Colors.blue : Colors.black),
+                  icon: Icon(Icons.person,
+                      color: currentPage == 2 ? Colors.blue : Colors.black),
                   onPressed: () {
                     // indexPageController.changeTab(1);
                     pageController.jumpToPage(1);
