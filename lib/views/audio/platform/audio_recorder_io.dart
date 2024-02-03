@@ -16,7 +16,7 @@ mixin AudioRecorderMixin {
   Future<void> recordStream(
     AudioRecorder recorder,
     RecordConfig config,
-    Function(Uint8List data) dataChanged,
+    Function(List data) dataChanged,
   ) async {
     final path = await _getPath(333);
 
@@ -27,12 +27,13 @@ mixin AudioRecorderMixin {
     stream.listen(
       (data) {
         // ignore: avoid_print
-        print(
-          recorder.convertBytesToInt16(Uint8List.fromList(data)),
-        );
-        file.writeAsBytesSync(data, mode: FileMode.append);
+        // print(
+        //   recorder.convertBytesToInt16(Uint8List.fromList(data)),
+        // );
+        // file.writeAsBytesSync(data, mode: FileMode.append);
 
-        // dataChanged.call(data);
+        dataChanged
+            .call(recorder.convertBytesToInt16(Uint8List.fromList(data)));
       },
       // ignore: avoid_print
       onDone: () {
@@ -48,7 +49,7 @@ mixin AudioRecorderMixin {
     final dir = await getApplicationDocumentsDirectory();
     return p.join(
       dir.path,
-      'audio_$tag.aac',
+      'audio_$tag.pcm',
     );
   }
 }

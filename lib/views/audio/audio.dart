@@ -1,32 +1,36 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_soloud/flutter_soloud.dart';
-// import 'package:just_audio/just_audio.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:record_platform_interface/record_platform_interface.dart';
-import 'package:audioplayers/audioplayers.dart';
+// import 'package:audioplayers/audioplayers.dart';
 
 import 'package:app/UI/custom_appbar.dart';
 import 'package:app/views/audio/platform/audio_recorder_io.dart';
 import 'package:app/views/audio/record.dart';
 
-// class MyCustomSource extends StreamAudioSource {
-//   final List<int> bytes;
-//   MyCustomSource(this.bytes);
+class MyCustomSource extends StreamAudioSource {
+  final List<int> bytes;
+  MyCustomSource(this.bytes);
 
-//   @override
-//   Future<StreamAudioResponse> request([int? start, int? end]) async {
-//     start ??= 0;
-//     end ??= bytes.length;
-//     return StreamAudioResponse(
-//       sourceLength: bytes.length,
-//       contentLength: end - start,
-//       offset: start,
-//       stream: Stream.value(bytes.sublist(start, end)),
-//       contentType: 'audio/mpeg',
-//     );
-//   }
-// }
+  @override
+  Future<StreamAudioResponse> request([int? start, int? end]) async {
+    start ??= 0;
+    end ??= bytes.length;
+    return StreamAudioResponse(
+      sourceLength: bytes.length,
+      contentLength: end - start,
+      offset: start,
+      stream: Stream.value(bytes.sublist(start, end)),
+      contentType: 'audio/pcm',
+    );
+  }
+}
+
+typedef MainFunc = Int32 Function();
+typedef Main = int Function();
 
 class Audio extends StatefulWidget {
   const Audio({super.key});
@@ -44,8 +48,7 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
   StreamSubscription<Amplitude>? _amplitudeSub;
   Amplitude? _amplitude;
 
-  // final player = AudioPlayer();
-  final _audioPlayer = AudioPlayer()..setReleaseMode(ReleaseMode.stop);
+  final player = AudioPlayer();
 
   @override
   void initState() {
@@ -60,10 +63,6 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
         .listen((amp) {
       setState(() => _amplitude = amp);
     });
-
-    // BytesSource bytesSource = BytesSource([]);
-    // bytesSource.setOnPlayer(player)
-    // _audioPlayer.setSource(source);
 
     super.initState();
   }
@@ -114,7 +113,7 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
           sampleRate: 48000,
         );
 
-        // await recordFile(_audioRecorder, config);
+        // await recordFile(_audioRecorder, config, 1);
 
         // Record to file
         // int index = 0;
@@ -132,11 +131,16 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
         await recordStream(
           _audioRecorder,
           config,
-          (data) {
-            // BytesSource source = BytesSource(data);
-            // _audioPlayer.play(source);
+          (data) async {
+            await player.setAudioSource(MyCustomSource(List.from(data)));
+            // player.play();
           },
         );
+
+        final dylib = DynamicLibrary.open('your_library.so');
+        final add = dylib.lookupFunction<MainFunc, Main>('add');
+
+        add.call();
 
         // player.play();
 
@@ -152,19 +156,15 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
   }
 
   Future<void> _stop() async {
-    // await _audioRecorder.pause();
-    const path =
-        '/Users/mac/Library/Containers/com.example.app/Data/Documents/audio_1706797277186.wav'; // await _audioRecorder.stop();
+    String? path =
+        "/Users/mac/Library/Containers/com.example.app/Data/Documents/audio_333.pcm"; //await _audioRecorder.stop();
 
     if (path != null) {
       // widget.onStop(path);
       print("path: $path");
 
-      // player.setAudioSource(streamAudioSource);
-      // player.play();
-
-      DeviceFileSource source = DeviceFileSource(path);
-      _audioPlayer.play(source);
+      player.setFilePath(path);
+      player.play();
     }
   }
 
