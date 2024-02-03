@@ -50,6 +50,11 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
 
   final player = AudioPlayer();
 
+  List<InputDevice> devs = [];
+  late InputDevice inputDevice;
+  int globalTime = 0;
+  bool stop = true;
+
   @override
   void initState() {
     _audioRecorder = AudioRecorder();
@@ -64,7 +69,47 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
       setState(() => _amplitude = amp);
     });
 
+    // BytesSource bytesSource = BytesSource([]);
+    // bytesSource.setOnPlayer(player)
+    // _audioPlayer.setSource(source);
+
+    getDevice();
+
     super.initState();
+  }
+
+  getDevice() async {
+    devs = await _audioRecorder.listInputDevices();
+    if (devs.isNotEmpty) {
+      inputDevice = devs[0];
+    }
+    setState(() {});
+  }
+
+  List<Widget> getDeviceList() {
+    List<Widget> list = [];
+
+    for (InputDevice dev in devs) {
+      list.add(GestureDetector(
+        onTap: () {
+          setState(() {
+            inputDevice = dev;
+          });
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            border: inputDevice.id == dev.id
+                ? Border.all(
+                    color: Colors.blue,
+                  )
+                : null,
+          ),
+          child: Text(dev.label),
+        ),
+      ));
+    }
+
+    return list;
   }
 
   @override
@@ -98,44 +143,48 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
 
     try {
       if (await _audioRecorder.hasPermission()) {
-        const encoder = AudioEncoder.pcm16bits;
+        const encoder = AudioEncoder.wav;
 
         if (!await _isEncoderSupported(encoder)) {
           return;
         }
 
-        List<InputDevice> devs = await _audioRecorder.listInputDevices();
-        debugPrint(devs.toString());
-
         RecordConfig config = RecordConfig(
           encoder: encoder,
-          device: devs[1],
+          device: inputDevice,
           sampleRate: 48000,
         );
 
         // await recordFile(_audioRecorder, config, 1);
 
         // Record to file
-        // int index = 0;
-        // Timer.periodic(const Duration(milliseconds: 500), (timer) {
-        //   /// 停止并播放
-        //   _stop();
+        stop = false;
+        int index = 0;
+        Timer.periodic(const Duration(milliseconds: 800), (timer) {
+          /// 停止并播放
+          _stop();
 
-        //   /// 录音
-        //   recordFile(_audioRecorder, config, index % 3);
-
-        //   index++;
-        // });
+          if (stop == true) {
+            timer.cancel();
+          } else {
+            /// 录音
+            recordFile(_audioRecorder, config, index % 3);
+            index++;
+            setState(() {
+              globalTime++;
+            });
+          }
+        });
 
         // Record to stream
-        await recordStream(
-          _audioRecorder,
-          config,
-          (data) async {
-            await player.setAudioSource(MyCustomSource(List.from(data)));
-            // player.play();
-          },
-        );
+        // await recordStream(
+        //   _audioRecorder,
+        //   config,
+        //   (data) async {
+        //     await player.setAudioSource(MyCustomSource(List.from(data)));
+        //     // player.play();
+        //   },
+        // );
 
         final dylib = DynamicLibrary.open('your_library.so');
         final add = dylib.lookupFunction<MainFunc, Main>('add');
@@ -156,9 +205,7 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
   }
 
   Future<void> _stop() async {
-    String? path =
-        "/Users/mac/Library/Containers/com.example.app/Data/Documents/audio_333.pcm"; //await _audioRecorder.stop();
-
+    String? path = await _audioRecorder.stop();
     if (path != null) {
       // widget.onStop(path);
       print("path: $path");
@@ -219,16 +266,27 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar.regularAppBar('title'),
-        body: SafeArea(
+      appBar: CustomAppBar.regularAppBar('音频测试'),
+      body: SafeArea(
+        child: Center(
           child: Container(
               child: Column(
             children: [
+              Column(
+                children: getDeviceList(),
+              ),
+              const SizedBox(
+                height: 80,
+              ),
               GestureDetector(
-                child: Text('play'),
+                child: Text('stop'),
                 onTap: () async {
-                  _stop();
+                  stop = true;
+                  globalTime = 0;
                 },
+              ),
+              const SizedBox(
+                height: 10,
               ),
               GestureDetector(
                 child: Text('record'),
@@ -236,9 +294,14 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
                   _start();
                 },
               ),
-              Text("> $_recordDuration"),
+              const SizedBox(
+                height: 10,
+              ),
+              Text("${stop ? '等待中' : '录制中'} $globalTime"),
             ],
           )),
-        ));
+        ),
+      ),
+    );
   }
 }

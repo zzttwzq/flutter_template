@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:app/utils/c_log_util.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:app/views/audio/record.dart';
@@ -10,6 +11,7 @@ mixin AudioRecorderMixin {
   Future<void> recordFile(
       AudioRecorder recorder, RecordConfig config, int tag) async {
     final path = await _getPath(tag);
+    LOG.d(">>> $path");
     await recorder.start(config, path: path);
   }
 
@@ -20,7 +22,7 @@ mixin AudioRecorderMixin {
   ) async {
     final path = await _getPath(333);
 
-    final file = File(path);
+    // final file = File(path);
 
     final stream = await recorder.startStream(config);
 
@@ -49,7 +51,7 @@ mixin AudioRecorderMixin {
     final dir = await getApplicationDocumentsDirectory();
     return p.join(
       dir.path,
-      'audio_$tag.pcm',
+      'audio_$tag.wav',
     );
   }
 }
