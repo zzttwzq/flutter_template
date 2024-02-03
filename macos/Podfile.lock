@@ -1,9 +1,18 @@
 PODS:
+  - audio_session (0.0.1):
+    - FlutterMacOS
   - audioplayers_darwin (0.0.1):
     - FlutterMacOS
   - device_info_plus (0.0.1):
     - FlutterMacOS
+  - flutter_soloud (0.0.1):
+    - FlutterMacOS
+  - flutter_webrtc (0.9.36):
+    - FlutterMacOS
+    - WebRTC-SDK (= 114.5735.08)
   - FlutterMacOS (1.0.0)
+  - just_audio (0.0.1):
+    - FlutterMacOS
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -15,23 +24,40 @@ PODS:
     - FlutterMacOS
   - url_launcher_macos (0.0.1):
     - FlutterMacOS
+  - WebRTC-SDK (114.5735.08)
 
 DEPENDENCIES:
+  - audio_session (from `Flutter/ephemeral/.symlinks/plugins/audio_session/macos`)
   - audioplayers_darwin (from `Flutter/ephemeral/.symlinks/plugins/audioplayers_darwin/macos`)
   - device_info_plus (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos`)
+  - flutter_soloud (from `Flutter/ephemeral/.symlinks/plugins/flutter_soloud/macos`)
+  - flutter_webrtc (from `Flutter/ephemeral/.symlinks/plugins/flutter_webrtc/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
+  - just_audio (from `Flutter/ephemeral/.symlinks/plugins/just_audio/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
   - record_darwin (from `Flutter/ephemeral/.symlinks/plugins/record_darwin/macos`)
   - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
 
+SPEC REPOS:
+  trunk:
+    - WebRTC-SDK
+
 EXTERNAL SOURCES:
+  audio_session:
+    :path: Flutter/ephemeral/.symlinks/plugins/audio_session/macos
   audioplayers_darwin:
     :path: Flutter/ephemeral/.symlinks/plugins/audioplayers_darwin/macos
   device_info_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos
+  flutter_soloud:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_soloud/macos
+  flutter_webrtc:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_webrtc/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
+  just_audio:
+    :path: Flutter/ephemeral/.symlinks/plugins/just_audio/macos
   path_provider_foundation:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
   record_darwin:
@@ -42,13 +68,18 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
 
 SPEC CHECKSUMS:
+  audio_session: dea1f41890dbf1718f04a56f1d6150fd50039b72
   audioplayers_darwin: dcad41de4fbd0099cb3749f7ab3b0cb8f70b810c
   device_info_plus: 5401765fde0b8d062a2f8eb65510fb17e77cf07f
+  flutter_soloud: 83719ca1f200cf5f537de0740f4ef97fa36e9bb2
+  flutter_webrtc: cf7dc44d26cbb5c5f1ae5f583dab545871f287f9
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  just_audio: 9b67ca7b97c61cfc9784ea23cd8cc55eb226d489
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   record_darwin: 1f6619f2abac4d1ca91d3eeab038c980d76f1517
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   url_launcher_macos: d2691c7dd33ed713bf3544850a623080ec693d95
+  WebRTC-SDK: c24d2a6c9f571f2ed42297cb8ffba9557093142b
 
 PODFILE CHECKSUM: 8d40c19d3cbdb380d870685c3a564c989f1efa52
 

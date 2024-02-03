@@ -42,11 +42,6 @@ dependencies:
   flutter_sound: ^9.2.13
   local_auth: ^2.1.5
 
-  # audioplayers: 4.1.0
-  # flutter_webrtc: 
-  # record: ^5.0.4
-  # audio_service:
-
   # https://pub.dev/packages/uuid
   uuid: ">=3.0.7 <5.0.0"
   path_provider: 
@@ -57,7 +52,9 @@ dependencies:
   record_android: ^1.0.4
   record_darwin: ^1.0.1
   audioplayers: 
-  # flutter_soloud: ^1.2.4
+  just_audio: ^0.9.36
+  flutter_soloud: ^1.2.4
+  flutter_webrtc: ^0.9.47
 
 dev_dependencies:
   flutter_test:

@@ -1,14 +1,32 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+// import 'package:flutter_soloud/flutter_soloud.dart';
+// import 'package:just_audio/just_audio.dart';
+import 'package:record_platform_interface/record_platform_interface.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 import 'package:app/UI/custom_appbar.dart';
 import 'package:app/views/audio/platform/audio_recorder_io.dart';
 import 'package:app/views/audio/record.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:record_platform_interface/record_platform_interface.dart';
 
-// import 'package:audioplayers/audioplayers.dart' as ap;
-import 'package:audioplayers/audioplayers.dart';
+// class MyCustomSource extends StreamAudioSource {
+//   final List<int> bytes;
+//   MyCustomSource(this.bytes);
+
+//   @override
+//   Future<StreamAudioResponse> request([int? start, int? end]) async {
+//     start ??= 0;
+//     end ??= bytes.length;
+//     return StreamAudioResponse(
+//       sourceLength: bytes.length,
+//       contentLength: end - start,
+//       offset: start,
+//       stream: Stream.value(bytes.sublist(start, end)),
+//       contentType: 'audio/mpeg',
+//     );
+//   }
+// }
 
 class Audio extends StatefulWidget {
   const Audio({super.key});
@@ -26,9 +44,7 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
   StreamSubscription<Amplitude>? _amplitudeSub;
   Amplitude? _amplitude;
 
-  Uint8List uint8list = Uint8List.fromList([]);
-  bool playing = false;
-
+  // final player = AudioPlayer();
   final _audioPlayer = AudioPlayer()..setReleaseMode(ReleaseMode.stop);
 
   @override
@@ -62,6 +78,25 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
   }
 
   Future<void> _start() async {
+    /// Start audio engine if not already
+    // if (!SoLoud().isIsolateRunning()) {
+    //   await SoLoud().startIsolate().then((value) {
+    //     if (value == PlayerErrors.noError) {
+    //       debugPrint('isolate started');
+    //     } else {
+    //       debugPrint('isolate starting error: $value');
+    //       return;
+    //     }
+    //   });
+    // }
+    // SoundProps currentSound = SoundProps(10000);
+    // currentSound.soundEvents.add(0);
+    // await SoLoud().disposeSound(currentSound!);
+    // /// play it
+    // final playRet = await SoLoud().play(currentSound!);
+    // if (playRet.error != PlayerErrors.noError) return;
+    // currentSound = playRet.sound;
+
     try {
       if (await _audioRecorder.hasPermission()) {
         const encoder = AudioEncoder.pcm16bits;
@@ -76,25 +111,34 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
         RecordConfig config = RecordConfig(
           encoder: encoder,
           device: devs[1],
+          sampleRate: 48000,
         );
 
+        // await recordFile(_audioRecorder, config);
+
         // Record to file
-        await recordFile(_audioRecorder, config);
+        // int index = 0;
+        // Timer.periodic(const Duration(milliseconds: 500), (timer) {
+        //   /// 停止并播放
+        //   _stop();
+
+        //   /// 录音
+        //   recordFile(_audioRecorder, config, index % 3);
+
+        //   index++;
+        // });
 
         // Record to stream
-        // await recordStream(
-        //   _audioRecorder,
-        //   config,
-        //   (data) {
-        //     // print(data);
+        await recordStream(
+          _audioRecorder,
+          config,
+          (data) {
+            // BytesSource source = BytesSource(data);
+            // _audioPlayer.play(source);
+          },
+        );
 
-        //     print(">>> ${data.length}");
-        //     // uint8list = data;
-
-        //     // BytesSource source = BytesSource(data);
-        //     // _audioPlayer.play(source);
-        //   },
-        // );
+        // player.play();
 
         _recordDuration = 0;
 
@@ -108,15 +152,19 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
   }
 
   Future<void> _stop() async {
-    final path = await _audioRecorder.stop();
+    // await _audioRecorder.pause();
+    const path =
+        '/Users/mac/Library/Containers/com.example.app/Data/Documents/audio_1706797277186.wav'; // await _audioRecorder.stop();
 
     if (path != null) {
       // widget.onStop(path);
       print("path: $path");
 
+      // player.setAudioSource(streamAudioSource);
+      // player.play();
+
       DeviceFileSource source = DeviceFileSource(path);
       _audioPlayer.play(source);
-      // downloadWebData(path);
     }
   }
 

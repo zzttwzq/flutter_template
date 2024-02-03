@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\workspace\rvc\c_proj\c_training_bkp231207\c_projs\demos\api_demo\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\workspace\rvc\c_proj\c_training_bkp231207\c_projs\demos\api_demo\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{E6274BFF-061E-3A64-AAA2-8F5C873185F2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

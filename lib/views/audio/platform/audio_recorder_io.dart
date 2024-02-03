@@ -7,9 +7,9 @@ import 'package:app/views/audio/record.dart';
 import 'package:record_platform_interface/record_platform_interface.dart';
 
 mixin AudioRecorderMixin {
-  Future<void> recordFile(AudioRecorder recorder, RecordConfig config) async {
-    final path = await _getPath();
-
+  Future<void> recordFile(
+      AudioRecorder recorder, RecordConfig config, int tag) async {
+    final path = await _getPath(tag);
     await recorder.start(config, path: path);
   }
 
@@ -18,21 +18,21 @@ mixin AudioRecorderMixin {
     RecordConfig config,
     Function(Uint8List data) dataChanged,
   ) async {
-    final path = await _getPath();
+    final path = await _getPath(333);
 
-    // final file = File(path);
+    final file = File(path);
 
     final stream = await recorder.startStream(config);
 
     stream.listen(
       (data) {
         // ignore: avoid_print
-        // print(
-        //   recorder.convertBytesToInt16(Uint8List.fromList(data)),
-        // );
-        // file.writeAsBytesSync(data, mode: FileMode.append);
+        print(
+          recorder.convertBytesToInt16(Uint8List.fromList(data)),
+        );
+        file.writeAsBytesSync(data, mode: FileMode.append);
 
-        dataChanged.call(data);
+        // dataChanged.call(data);
       },
       // ignore: avoid_print
       onDone: () {
@@ -44,11 +44,11 @@ mixin AudioRecorderMixin {
 
   void downloadWebData(String path) {}
 
-  Future<String> _getPath() async {
+  Future<String> _getPath(int tag) async {
     final dir = await getApplicationDocumentsDirectory();
     return p.join(
       dir.path,
-      'audio_${DateTime.now().millisecondsSinceEpoch}.wav',
+      'audio_$tag.aac',
     );
   }
 }

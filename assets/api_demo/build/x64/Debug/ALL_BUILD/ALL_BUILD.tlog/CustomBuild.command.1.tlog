@@ -1,0 +1,10 @@
+^D:\WORKSPACE\RVC\C_PROJ\C_TRAINING_BKP231207\C_PROJS\DEMOS\API_DEMO\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/workspace/rvc/c_proj/c_training_bkp231207/c_projs/demos/api_demo -BD:/workspace/rvc/c_proj/c_training_bkp231207/c_projs/demos/api_demo/build --check-stamp-file D:/workspace/rvc/c_proj/c_training_bkp231207/c_projs/demos/api_demo/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
