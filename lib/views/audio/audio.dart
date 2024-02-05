@@ -1,5 +1,7 @@
 import 'dart:async';
-import 'dart:ffi';
+import 'dart:ffi' as ffi;
+import 'dart:io';
+// import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_soloud/flutter_soloud.dart';
@@ -29,8 +31,12 @@ class MyCustomSource extends StreamAudioSource {
   }
 }
 
-typedef MainFunc = Int32 Function();
-typedef Main = int Function();
+typedef CInitLib = ffi.Int32 Function();
+typedef DartInitLib = int Function();
+typedef CSetParam = ffi.Int32 Function(ffi.Int32, ffi.Int32);
+typedef DartSetParam = int Function(int, int);
+// typedef Process = int Function();
+// typedef Process = int Function();
 
 class Audio extends StatefulWidget {
   const Audio({super.key});
@@ -121,7 +127,26 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
     super.dispose();
   }
 
-  Future<void> _start() async {
+  _start() async {
+    // final dylib = ffi.DynamicLibrary.open("assets/lib/SLTBasic.dll");
+    // final dylib = ffi.DynamicLibrary.open(Platform.script
+    //     .resolve("build/windows/x64/runner/Debug/SLTBasic.dll")
+    //     .toFilePath());
+    // final dylib = ffi.DynamicLibrary.open("assets/lib/libSLTBasic.so");
+    // final dylib = ffi.DynamicLibrary.open("assets/lib/libSLTBasic.so");
+
+    final dylib = ffi.DynamicLibrary.open("assets/lib/hello.dll");
+
+    final initLib =
+        dylib.lookupFunction<CInitLib, DartInitLib>('slt_audio_init');
+    int res = initLib.call();
+
+    // final setParam = dylib
+    //     .lookupFunction<CSetParam, DartSetParam>('set_input_acoustic_params');
+    // int res2 = setParam.call(2, 48000);
+
+    return;
+
     /// Start audio engine if not already
     // if (!SoLoud().isIsolateRunning()) {
     //   await SoLoud().startIsolate().then((value) {
@@ -153,6 +178,7 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
           encoder: encoder,
           device: inputDevice,
           sampleRate: 48000,
+          numChannels: 2,
         );
 
         // await recordFile(_audioRecorder, config, 1);
@@ -185,11 +211,6 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
         //     // player.play();
         //   },
         // );
-
-        final dylib = DynamicLibrary.open('your_library.so');
-        final add = dylib.lookupFunction<MainFunc, Main>('add');
-
-        add.call();
 
         // player.play();
 
@@ -272,6 +293,7 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
           child: Container(
               child: Column(
             children: [
+              Image.asset("assets/images/assetsLib.png"),
               Column(
                 children: getDeviceList(),
               ),

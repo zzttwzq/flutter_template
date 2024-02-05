@@ -28,13 +28,23 @@ void main() {
   // }
 
   var libraryPath =
-      '/Users/mac/Library/Containers/com.example.app/Data/Documents/hello.dll';
+      path.join(Directory.current.path, 'hello_library', 'libhello.so');
+
+  if (Platform.isMacOS) {
+    // libraryPath =
+    //     path.join(Directory.current.path, 'hello_library', 'libhello.dylib');
+  }
+
+  if (Platform.isWindows) {
+    libraryPath =
+        path.join(Directory.current.path, 'assets', "lib", 'hello.dll');
+  }
+
   final dylib = ffi.DynamicLibrary.open(libraryPath);
 
   // Look up the C function 'hello_world'
-  final HelloWorld hello = dylib
-      .lookup<ffi.NativeFunction<HelloWorldFunc>>('hello_world')
-      .asFunction();
+  final hello = dylib.lookupFunction<HelloWorldFunc, HelloWorld>('hello_world');
+
   // Call the function
-  hello();
+  hello.call();
 }
