@@ -1,24 +1,3 @@
-// import 'dart:async';
-
-// import 'package:app/views/app.dart';
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// // import 'package:flutter_webrtc/flutter_webrtc.dart';
-
-// void main() {
-//   WidgetsFlutterBinding.ensureInitialized();
-
-//   FlutterError.onError = (FlutterErrorDetails details) async {
-//     // reportError(details);
-
-//     debugPrint('>>> ${details.toString()}');
-
-//     // await test();
-//   };
-
-//   runApp(App());
-// }
-
 // Copyright (c) 2019, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -35,19 +14,21 @@ typedef HelloWorld = void Function();
 
 void main() {
   // Open the dynamic library
+  // var libraryPath =
+  //     path.join(Directory.current.path, 'hello_library', 'libhello.so');
+
+  // if (Platform.isMacOS) {
+  //   libraryPath =
+  //       path.join(Directory.current.path, 'hello_library', 'libhello.dylib');
+  // }
+
+  // if (Platform.isWindows) {
+  //   libraryPath = path.join(
+  //       Directory.current.path, 'hello_library', 'Debug', 'hello.dll');
+  // }
+
   var libraryPath =
-      path.join(Directory.current.path, 'hello_library', 'libhello.so');
-
-  if (Platform.isMacOS) {
-    libraryPath =
-        path.join(Directory.current.path, 'hello_library', 'libhello.dylib');
-  }
-
-  if (Platform.isWindows) {
-    libraryPath = path.join(
-        Directory.current.path, 'hello_library', 'Debug', 'hello.dll');
-  }
-
+      '/Users/mac/Library/Containers/com.example.app/Data/Documents/hello.dll';
   final dylib = ffi.DynamicLibrary.open(libraryPath);
 
   // Look up the C function 'hello_world'
