@@ -75,3 +75,4 @@ flutter:
     - assets/images/loading/
     - assets/images/template/
     - assets/lib/
+    - assets/lib/hello.dll
