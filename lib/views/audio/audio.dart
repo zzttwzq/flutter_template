@@ -1,18 +1,16 @@
 import 'dart:async';
 import 'dart:ffi' as ffi;
 import 'dart:io';
-// import 'package:ffi/ffi.dart';
+import 'package:app/utils/c_log_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_soloud/flutter_soloud.dart';
+import 'package:path/path.dart' as path;
 import 'package:just_audio/just_audio.dart';
 import 'package:record_platform_interface/record_platform_interface.dart';
-// import 'package:audioplayers/audioplayers.dart';
 
 import 'package:app/UI/custom_appbar.dart';
 import 'package:app/views/audio/platform/audio_recorder_io.dart';
 import 'package:app/views/audio/record.dart';
-import 'package:path/path.dart' as path;
 
 class MyCustomSource extends StreamAudioSource {
   final List<int> bytes;
@@ -36,8 +34,8 @@ typedef CInitLib = ffi.Int32 Function();
 typedef DartInitLib = int Function();
 typedef CSetParam = ffi.Int32 Function(ffi.Int32, ffi.Int32);
 typedef DartSetParam = int Function(int, int);
-// typedef Process = int Function();
-// typedef Process = int Function();
+typedef CProcess = int Function(Float32List l1, Float32List l2);
+typedef DartProcess = int Function(List li, List l2);
 
 class Audio extends StatefulWidget {
   const Audio({super.key});
@@ -51,8 +49,8 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
   Timer? _timer;
   late final AudioRecorder _audioRecorder;
   StreamSubscription<RecordState>? _recordSub;
-  RecordState _recordState = RecordState.stop;
   StreamSubscription<Amplitude>? _amplitudeSub;
+  RecordState _recordState = RecordState.stop;
   Amplitude? _amplitude;
 
   final player = AudioPlayer();
@@ -75,10 +73,6 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
         .listen((amp) {
       setState(() => _amplitude = amp);
     });
-
-    // BytesSource bytesSource = BytesSource([]);
-    // bytesSource.setOnPlayer(player)
-    // _audioPlayer.setSource(source);
 
     getDevice();
 
@@ -128,14 +122,7 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
     super.dispose();
   }
 
-  _start() async {
-    // final dylib = ffi.DynamicLibrary.open("assets/lib/SLTBasic.dll");
-    // final dylib = ffi.DynamicLibrary.open(Platform.script
-    //     .resolve("build/windows/x64/runner/Debug/SLTBasic.dll")
-    //     .toFilePath());
-    // final dylib = ffi.DynamicLibrary.open("assets/lib/libSLTBasic.so");
-    // final dylib = ffi.DynamicLibrary.open("assets/lib/libSLTBasic.so");
-
+  _loadMath() {
     var libraryPath =
         path.join(Directory.current.path, 'hello_library', 'libhello.so');
 
@@ -146,11 +133,7 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
 
     if (Platform.isWindows) {
       libraryPath =
-          path.join(Directory.current.path, 'assets', 'lib', 'libSLTBasic.dll');
-      libraryPath =
           path.join(Directory.current.path, 'assets', 'lib', 'SLTBasic.dll');
-      // libraryPath =
-      //     path.join(Directory.current.path, 'assets', 'lib', 'hello.dll');
     }
 
     final dylib = ffi.DynamicLibrary.open(libraryPath);
@@ -159,31 +142,14 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
         dylib.lookupFunction<CInitLib, DartInitLib>('slt_audio_init');
     int res = initLib.call();
 
-    // final setParam = dylib
-    //     .lookupFunction<CSetParam, DartSetParam>('set_input_acoustic_params');
-    // int res2 = setParam.call(2, 48000);
+    final setParam = dylib
+        .lookupFunction<CSetParam, DartSetParam>('set_input_acoustic_params');
+    int res2 = setParam.call(2, 48000);
 
-    return;
+    LOG.d(">>>>>>>>>>>> ");
+  }
 
-    /// Start audio engine if not already
-    // if (!SoLoud().isIsolateRunning()) {
-    //   await SoLoud().startIsolate().then((value) {
-    //     if (value == PlayerErrors.noError) {
-    //       debugPrint('isolate started');
-    //     } else {
-    //       debugPrint('isolate starting error: $value');
-    //       return;
-    //     }
-    //   });
-    // }
-    // SoundProps currentSound = SoundProps(10000);
-    // currentSound.soundEvents.add(0);
-    // await SoLoud().disposeSound(currentSound!);
-    // /// play it
-    // final playRet = await SoLoud().play(currentSound!);
-    // if (playRet.error != PlayerErrors.noError) return;
-    // currentSound = playRet.sound;
-
+  _start() async {
     try {
       if (await _audioRecorder.hasPermission()) {
         const encoder = AudioEncoder.wav;
@@ -198,8 +164,6 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
           sampleRate: 48000,
           numChannels: 2,
         );
-
-        // await recordFile(_audioRecorder, config, 1);
 
         // Record to file
         stop = false;
@@ -229,8 +193,6 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
         //     // player.play();
         //   },
         // );
-
-        // player.play();
 
         _recordDuration = 0;
 
@@ -331,7 +293,8 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
               GestureDetector(
                 child: Text('record'),
                 onTap: () async {
-                  _start();
+                  // _start();
+                  _loadMath();
                 },
               ),
               const SizedBox(
