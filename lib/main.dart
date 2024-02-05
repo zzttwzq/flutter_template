@@ -1,50 +1,12 @@
-// Copyright (c) 2019, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-import 'dart:ffi' as ffi;
-import 'dart:io' show Platform, Directory;
-
-import 'package:path/path.dart' as path;
-
-// FFI signature of the hello_world C function
-typedef HelloWorldFunc = ffi.Void Function();
-// Dart type definition for calling the C foreign function
-typedef HelloWorld = void Function();
+import 'package:app/views/app.dart';
+import 'package:flutter/material.dart';
 
 void main() {
-  // Open the dynamic library
-  // var libraryPath =
-  //     path.join(Directory.current.path, 'hello_library', 'libhello.so');
+  WidgetsFlutterBinding.ensureInitialized();
 
-  // if (Platform.isMacOS) {
-  //   libraryPath =
-  //       path.join(Directory.current.path, 'hello_library', 'libhello.dylib');
-  // }
+  FlutterError.onError = (FlutterErrorDetails details) async {
+    debugPrint('>>> ${details.toString()}');
+  };
 
-  // if (Platform.isWindows) {
-  //   libraryPath = path.join(
-  //       Directory.current.path, 'hello_library', 'Debug', 'hello.dll');
-  // }
-
-  var libraryPath =
-      path.join(Directory.current.path, 'hello_library', 'libhello.so');
-
-  if (Platform.isMacOS) {
-    // libraryPath =
-    //     path.join(Directory.current.path, 'hello_library', 'libhello.dylib');
-  }
-
-  if (Platform.isWindows) {
-    libraryPath =
-        path.join(Directory.current.path, 'assets', "lib", 'hello.dll');
-  }
-
-  final dylib = ffi.DynamicLibrary.open(libraryPath);
-
-  // Look up the C function 'hello_world'
-  final hello = dylib.lookupFunction<HelloWorldFunc, HelloWorld>('hello_world');
-
-  // Call the function
-  hello.call();
+  runApp(App());
 }

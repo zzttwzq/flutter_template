@@ -12,6 +12,7 @@ import 'package:record_platform_interface/record_platform_interface.dart';
 import 'package:app/UI/custom_appbar.dart';
 import 'package:app/views/audio/platform/audio_recorder_io.dart';
 import 'package:app/views/audio/record.dart';
+import 'package:path/path.dart' as path;
 
 class MyCustomSource extends StreamAudioSource {
   final List<int> bytes;
@@ -135,7 +136,24 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
     // final dylib = ffi.DynamicLibrary.open("assets/lib/libSLTBasic.so");
     // final dylib = ffi.DynamicLibrary.open("assets/lib/libSLTBasic.so");
 
-    final dylib = ffi.DynamicLibrary.open("assets/lib/hello.dll");
+    var libraryPath =
+        path.join(Directory.current.path, 'hello_library', 'libhello.so');
+
+    if (Platform.isMacOS) {
+      libraryPath =
+          path.join(Directory.current.path, 'hello_library', 'libhello.dylib');
+    }
+
+    if (Platform.isWindows) {
+      libraryPath =
+          path.join(Directory.current.path, 'assets', 'lib', 'libSLTBasic.dll');
+      libraryPath =
+          path.join(Directory.current.path, 'assets', 'lib', 'SLTBasic.dll');
+      // libraryPath =
+      //     path.join(Directory.current.path, 'assets', 'lib', 'hello.dll');
+    }
+
+    final dylib = ffi.DynamicLibrary.open(libraryPath);
 
     final initLib =
         dylib.lookupFunction<CInitLib, DartInitLib>('slt_audio_init');
