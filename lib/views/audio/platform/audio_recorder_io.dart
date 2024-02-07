@@ -22,19 +22,19 @@ mixin AudioRecorderMixin {
   ) async {
     final path = await _getPath(333);
 
-    // final file = File(path);
+    final file = File(path);
 
     final stream = await recorder.startStream(config);
 
     stream.listen(
       (data) {
         // ignore: avoid_print
-        // print(
-        //   recorder.convertBytesToInt16(Uint8List.fromList(data)),
-        // );
-        // file.writeAsBytesSync(data, mode: FileMode.append);
+        var d = recorder.convertBytesToInt16(Uint8List.fromList(data));
 
-        dataChanged.call(data);
+        // print(d);
+        // file.writeAsBytesSync(d, mode: FileMode.append);
+
+        dataChanged.call(d);
       },
       // ignore: avoid_print
       onDone: () {
@@ -50,7 +50,7 @@ mixin AudioRecorderMixin {
     final dir = await getApplicationDocumentsDirectory();
     return p.join(
       dir.path,
-      'audio_$tag.wav',
+      'audio_$tag.pcm',
     );
   }
 }

@@ -1,16 +1,18 @@
 import 'dart:async';
 import 'dart:ffi' as ffi;
+import 'dart:ffi';
 import 'dart:math' as math;
+import 'dart:math';
+import 'package:ffi/ffi.dart';
 import 'dart:io';
+import 'package:path/path.dart' as path;
+
 import 'package:app/utils/c_log_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mp_audio_stream/mp_audio_stream.dart';
-import 'package:path/path.dart' as path;
 import 'package:just_audio/just_audio.dart';
 import 'package:record_platform_interface/record_platform_interface.dart';
-
-import 'package:app/UI/custom_appbar.dart';
 import 'package:app/views/audio/platform/audio_recorder_io.dart';
 import 'package:app/views/audio/record.dart';
 
@@ -36,13 +38,16 @@ typedef CInitLib = ffi.Int32 Function();
 typedef DartInitLib = int Function();
 typedef CSetParam = ffi.Int32 Function(ffi.Int32, ffi.Int32);
 typedef DartSetParam = int Function(int, int);
-typedef CProcess = ffi.Pointer Function(
-  ffi.Pointer l1,
-  ffi.Pointer l2,
+
+typedef CProcess = ffi.Void Function(
+  ffi.Pointer<Float>,
+  ffi.Pointer<Float>,
+  ffi.Pointer<Float>,
 );
-typedef DartProcess = ffi.Pointer Function(
-  ffi.Pointer l1,
-  ffi.Pointer l2,
+typedef DartProcess = void Function(
+  ffi.Pointer<Float>,
+  ffi.Pointer<Float>,
+  ffi.Pointer<Float>,
 );
 
 class Audio extends StatefulWidget {
@@ -64,11 +69,12 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
   final audioStream = getAudioStream();
 
   final player = AudioPlayer();
-
   List<InputDevice> devs = [];
   late InputDevice inputDevice;
   int globalTime = 0;
   bool stop = true;
+  int rate = 44100;
+  int channel = 1;
 
   @override
   void initState() {
@@ -84,9 +90,16 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
       setState(() => _amplitude = amp);
     });
 
-    audioStream.init();
+    audioStream.init(
+      sampleRate: rate,
+      channels: channel,
+    );
+
+    AudioStreamStat sta = audioStream.stat();
 
     getDevice();
+
+    _initModel();
 
     super.initState();
   }
@@ -134,7 +147,7 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
     super.dispose();
   }
 
-  _loadMath() {
+  _initModel() {
     var libraryPath =
         path.join(Directory.current.path, 'hello_library', 'libhello.so');
 
@@ -156,20 +169,63 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
 
     final setParam = dylib
         .lookupFunction<CSetParam, DartSetParam>('set_input_acoustic_params');
-    int res2 = setParam.call(2, 48000);
+    int res2 = setParam.call(channel, rate);
 
-    final process = dylib
-        .lookupFunction<CProcess, DartProcess>('set_input_acoustic_params');
+    LOG.d(">>>>>>>>>>>> $res $res2");
+  }
 
-    // int res3 = process.call([], []);
+  _loadMath(List<double> li) {
+    var libraryPath =
+        path.join(Directory.current.path, 'hello_library', 'libhello.so');
 
-    LOG.d(">>>>>>>>>>>> ");
+    if (Platform.isMacOS) {
+      libraryPath =
+          path.join(Directory.current.path, 'hello_library', 'libhello.dylib');
+    }
+
+    if (Platform.isWindows) {
+      libraryPath =
+          path.join(Directory.current.path, 'assets', 'lib', 'SLTBasic.dll');
+    }
+
+    final dylib = ffi.DynamicLibrary.open(libraryPath);
+    final process =
+        dylib.lookupFunction<CProcess, DartProcess>('slt_audio_mic_process');
+
+    int length = 48 * 16 * 2;
+
+    li = [];
+    for (int i = 0; i < length; i++) {
+      double d = Random().nextDouble();
+      li.add(d);
+    }
+    // ffi.Pointer<ffi.Float> l2 = ffi.
+    final pointer = calloc<Float>(length);
+    pointer.asTypedList(li.length).setAll(0, li);
+
+    final pointer2 = calloc<Float>(0);
+    pointer.asTypedList(0);
+
+    final pointer3 = calloc<Float>(length);
+    pointer.asTypedList(li.length).setAll(0, []);
+
+    process.call(
+      pointer,
+      pointer2,
+      pointer3,
+    );
+
+    // LOG.d(">>>>>>>>>>>> ${}");
+
+    return pointer3.asTypedList(li.length);
+
+    // LOG.d(">>>>>>>>>>>> $res $res2 $res3");
   }
 
   _start() async {
     try {
       if (await _audioRecorder.hasPermission()) {
-        const encoder = AudioEncoder.wav;
+        const encoder = AudioEncoder.pcm16bits;
 
         if (!await _isEncoderSupported(encoder)) {
           return;
@@ -178,40 +234,24 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
         RecordConfig config = RecordConfig(
           encoder: encoder,
           device: inputDevice,
-          sampleRate: 48000,
-          numChannels: 2,
+          sampleRate: rate,
+          numChannels: channel,
         );
 
-        // Record to file
-        // stop = false;
-        // int index = 0;
-        // Timer.periodic(const Duration(milliseconds: 800), (timer) {
-        //   /// 停止并播放
-        //   _stop();
-
-        //   if (stop == true) {
-        //     timer.cancel();
-        //   } else {
-        //     /// 录音
-        //     recordFile(_audioRecorder, config, index % 3);
-        //     index++;
-        //     setState(() {
-        //       globalTime++;
-        //     });
-        //   }
-        // });
-
-        // Record to stream
+        // // Record to stream
         await recordStream(
           _audioRecorder,
           config,
           (data) async {
-            // audioStream.push(Float32List.fromList(data));
-            // await Future.delayed(const Duration(seconds: 2));
-            // audioStream.uninit();
-            print("><>>>>>");
-            // await player.setAudioSource(MyCustomSource(List.from(data)));
-            // player.play();
+            var float32 = Float32List(data.length);
+            for (var i = 0; i < data.length; i++) {
+              float32[i] = data[i] / 65536.0;
+            }
+
+            var a = float32;
+            // _loadMath(float32);
+
+            audioStream.push(a);
           },
         );
 
@@ -306,6 +346,15 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
                 onTap: () async {
                   stop = true;
                   globalTime = 0;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                child: Text('load math'),
+                onTap: () async {
+                  _initModel();
                 },
               ),
               const SizedBox(

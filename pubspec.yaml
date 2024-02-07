@@ -63,6 +63,13 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+  ffigen: ^11.0.0
+
+ffigen:
+  output: 'lib/views/audio/generated_bindings.dart'
+  headers:
+    entry-points:
+      - 'assets/lib/slt_audio_api.h'
 
 flutter:
   uses-material-design: true
