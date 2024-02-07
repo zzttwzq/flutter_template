@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:ffi' as ffi;
+import 'dart:math' as math;
 import 'dart:io';
 import 'package:app/utils/c_log_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mp_audio_stream/mp_audio_stream.dart';
 import 'package:path/path.dart' as path;
 import 'package:just_audio/just_audio.dart';
 import 'package:record_platform_interface/record_platform_interface.dart';
@@ -195,26 +197,27 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
         //   }
         // });
 
-        // Record to stream
-        await recordStream(
-          _audioRecorder,
-          config,
-          (data) async {
-            // final audioStream = getAudioStream();
-            // audioStream.init();
-            // const freq = 440;
-            // const rate = 44100;
-            // final sineWave = List.generate(rate * 1,
-            //     (i) => math.sin(2 * math.pi * ((i * freq) % rate) / rate));
-            // audioStream.push(Float32List.fromList(sineWave));
-            // await Future.delayed(const Duration(seconds: 2));
-            // audioStream.uninit();
+        final audioStream = getAudioStream();
+        audioStream.init();
+        const freq = 440;
+        const rate = 44100;
+        final sineWave = List.generate(rate * 1,
+            (i) => math.sin(2 * math.pi * ((i * freq) % rate) / rate));
+        audioStream.push(Float32List.fromList(sineWave));
+        await Future.delayed(const Duration(seconds: 2));
+        audioStream.uninit();
 
-            print("><>>>>>");
-            // await player.setAudioSource(MyCustomSource(List.from(data)));
-            // player.play();
-          },
-        );
+        // Record to stream
+        // await recordStream(
+        //   _audioRecorder,
+        //   config,
+        //   (data) async {
+
+        //     print("><>>>>>");
+        //     // await player.setAudioSource(MyCustomSource(List.from(data)));
+        //     // player.play();
+        //   },
+        // );
 
         _recordDuration = 0;
 
