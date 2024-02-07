@@ -34,8 +34,14 @@ typedef CInitLib = ffi.Int32 Function();
 typedef DartInitLib = int Function();
 typedef CSetParam = ffi.Int32 Function(ffi.Int32, ffi.Int32);
 typedef DartSetParam = int Function(int, int);
-typedef CProcess = int Function(Float32List l1, Float32List l2);
-typedef DartProcess = int Function(List li, List l2);
+typedef CProcess = ffi.Pointer Function(
+  ffi.Pointer l1,
+  ffi.Pointer l2,
+);
+typedef DartProcess = ffi.Pointer Function(
+  ffi.Pointer l1,
+  ffi.Pointer l2,
+);
 
 class Audio extends StatefulWidget {
   const Audio({super.key});
@@ -146,6 +152,11 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
         .lookupFunction<CSetParam, DartSetParam>('set_input_acoustic_params');
     int res2 = setParam.call(2, 48000);
 
+    final process = dylib
+        .lookupFunction<CProcess, DartProcess>('set_input_acoustic_params');
+
+    // int res3 = process.call([], []);
+
     LOG.d(">>>>>>>>>>>> ");
   }
 
@@ -166,33 +177,44 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
         );
 
         // Record to file
-        stop = false;
-        int index = 0;
-        Timer.periodic(const Duration(milliseconds: 800), (timer) {
-          /// 停止并播放
-          _stop();
+        // stop = false;
+        // int index = 0;
+        // Timer.periodic(const Duration(milliseconds: 800), (timer) {
+        //   /// 停止并播放
+        //   _stop();
 
-          if (stop == true) {
-            timer.cancel();
-          } else {
-            /// 录音
-            recordFile(_audioRecorder, config, index % 3);
-            index++;
-            setState(() {
-              globalTime++;
-            });
-          }
-        });
+        //   if (stop == true) {
+        //     timer.cancel();
+        //   } else {
+        //     /// 录音
+        //     recordFile(_audioRecorder, config, index % 3);
+        //     index++;
+        //     setState(() {
+        //       globalTime++;
+        //     });
+        //   }
+        // });
 
         // Record to stream
-        // await recordStream(
-        //   _audioRecorder,
-        //   config,
-        //   (data) async {
-        //     await player.setAudioSource(MyCustomSource(List.from(data)));
-        //     // player.play();
-        //   },
-        // );
+        await recordStream(
+          _audioRecorder,
+          config,
+          (data) async {
+            // final audioStream = getAudioStream();
+            // audioStream.init();
+            // const freq = 440;
+            // const rate = 44100;
+            // final sineWave = List.generate(rate * 1,
+            //     (i) => math.sin(2 * math.pi * ((i * freq) % rate) / rate));
+            // audioStream.push(Float32List.fromList(sineWave));
+            // await Future.delayed(const Duration(seconds: 2));
+            // audioStream.uninit();
+
+            print("><>>>>>");
+            // await player.setAudioSource(MyCustomSource(List.from(data)));
+            // player.play();
+          },
+        );
 
         _recordDuration = 0;
 
@@ -293,8 +315,7 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
               GestureDetector(
                 child: Text('record'),
                 onTap: () async {
-                  // _start();
-                  _loadMath();
+                  _start();
                 },
               ),
               const SizedBox(
