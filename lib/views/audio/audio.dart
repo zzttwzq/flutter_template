@@ -61,6 +61,8 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
   RecordState _recordState = RecordState.stop;
   Amplitude? _amplitude;
 
+  final audioStream = getAudioStream();
+
   final player = AudioPlayer();
 
   List<InputDevice> devs = [];
@@ -81,6 +83,8 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
         .listen((amp) {
       setState(() => _amplitude = amp);
     });
+
+    audioStream.init();
 
     getDevice();
 
@@ -197,27 +201,19 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
         //   }
         // });
 
-        final audioStream = getAudioStream();
-        audioStream.init();
-        const freq = 440;
-        const rate = 44100;
-        final sineWave = List.generate(rate * 1,
-            (i) => math.sin(2 * math.pi * ((i * freq) % rate) / rate));
-        audioStream.push(Float32List.fromList(sineWave));
-        await Future.delayed(const Duration(seconds: 2));
-        audioStream.uninit();
-
         // Record to stream
-        // await recordStream(
-        //   _audioRecorder,
-        //   config,
-        //   (data) async {
-
-        //     print("><>>>>>");
-        //     // await player.setAudioSource(MyCustomSource(List.from(data)));
-        //     // player.play();
-        //   },
-        // );
+        await recordStream(
+          _audioRecorder,
+          config,
+          (data) async {
+            // audioStream.push(Float32List.fromList(data));
+            // await Future.delayed(const Duration(seconds: 2));
+            // audioStream.uninit();
+            print("><>>>>>");
+            // await player.setAudioSource(MyCustomSource(List.from(data)));
+            // player.play();
+          },
+        );
 
         _recordDuration = 0;
 

@@ -34,8 +34,7 @@ mixin AudioRecorderMixin {
         // );
         // file.writeAsBytesSync(data, mode: FileMode.append);
 
-        dataChanged
-            .call(recorder.convertBytesToInt16(Uint8List.fromList(data)));
+        dataChanged.call(data);
       },
       // ignore: avoid_print
       onDone: () {

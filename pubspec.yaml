@@ -54,7 +54,7 @@ dependencies:
   audioplayers: 
   just_audio: ^0.9.36
   # flutter_soloud: ^1.2.4
-  flutter_webrtc: ^0.9.47
+  # flutter_webrtc: ^0.9.47
   ffi: ^2.1.0
   mp_audio_stream: ^0.1.4
 
