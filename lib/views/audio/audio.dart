@@ -210,7 +210,7 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
             // await Future.delayed(const Duration(seconds: 2));
             // audioStream.uninit();
 
-            print("><>>>>>");
+            print("><>>>>> $data");
             // await player.setAudioSource(MyCustomSource(List.from(data)));
             // player.play();
           },
@@ -289,16 +289,16 @@ class _AudioState extends State<Audio> with AudioRecorderMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.regularAppBar('音频测试'),
+      // appBar: CustomAppBar.regularAppBar('音频测试'),
       body: SafeArea(
         child: Center(
           child: Container(
               child: Column(
             children: [
-              Image.asset("assets/images/assetsLib.png"),
-              Column(
-                children: getDeviceList(),
-              ),
+              // Image.asset("assets/images/assetsLib.png"),
+              // Column(
+              //   children: getDeviceList(),
+              // ),
               const SizedBox(
                 height: 80,
               ),
