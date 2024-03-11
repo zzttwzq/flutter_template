@@ -1,5 +1,3 @@
-import 'package:app/views/audio/audio.dart';
-import 'package:app/views/audio/audio_binding.dart';
 import 'package:app/views/grid_page/grid_page.dart';
 import 'package:app/views/grid_page/grid_page_binding.dart';
 import 'package:app/views/home_page/home_page_binding.dart';
@@ -18,7 +16,7 @@ import '../views/mine_page/mine_page_binding.dart';
 import '../views/splash/splash_binding.dart';
 
 class AppRoute {
-  static String initialRoute = audioPage;
+  static String initialRoute = listPage;
 
   static String splashPage = "/splashPage";
   static String loginPage = "/login";
@@ -28,7 +26,6 @@ class AppRoute {
   static String listPage = "/list";
   static String gridPage = "/grid";
   static String providerTestPage = "/providerTestPage";
-  static String audioPage = "/audio";
 
   static List<GetPage> pages = [
     GetPage(
@@ -56,7 +53,6 @@ class AppRoute {
         name: listPage, page: () => ListPage(), bindings: [ListPageBinding()]),
     GetPage(
         name: gridPage, page: () => GridPage(), bindings: [GridPageBinding()]),
-    GetPage(name: audioPage, page: () => Audio(), bindings: [AudioBinding()]),
   ];
 
   /// 跳转页面
