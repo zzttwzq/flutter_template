@@ -16,7 +16,7 @@ import '../views/mine_page/mine_page_binding.dart';
 import '../views/splash/splash_binding.dart';
 
 class AppRoute {
-  static String initialRoute = listPage;
+  static String initialRoute = homePage;
 
   static String splashPage = "/splashPage";
   static String loginPage = "/login";
@@ -42,7 +42,7 @@ class AppRoute {
         bindings: [IndexPageBinding()],
         transition: Transition.rightToLeft),
     GetPage(
-        name: minePage,
+        name: homePage,
         page: () => const HomePage(),
         bindings: [HomePageBinding()]),
     GetPage(

@@ -37,26 +37,14 @@ dependencies:
   # package_info_plus: ^1.4.2 # 获取包信息
   flustars: any # Flutter常用工具类库 目前包含SharedPreferences Util, Screen Util, Directory Util, Widget Util, Image Util。
   tobias: ^2.4.1
-#  fluwx:
-  jpush_flutter: ^2.4.1
+  #  fluwx:
+  # jpush_flutter: ^2.4.1
   flutter_sound: ^9.2.13
   local_auth: ^2.1.5
 
-  # https://pub.dev/packages/uuid
-  uuid: ">=3.0.7 <5.0.0"
-  path_provider: 
-  record_platform_interface: ^1.0.2
-  record_web: ^1.0.4
-  record_windows: ^1.0.2
-  record_linux: '>=0.5.0 <1.0.0'
-  record_android: ^1.0.4
-  record_darwin: ^1.0.1
-  audioplayers: 
   just_audio: ^0.9.36
-  # flutter_soloud: ^1.2.4
-  # flutter_webrtc: ^0.9.47
-  ffi: ^2.1.0
-  mp_audio_stream: ^0.1.4
+  flutter_soloud: ^1.2.4
+  flutter_webrtc: ^0.10.3
 
 dev_dependencies:
   flutter_test:
@@ -80,8 +68,3 @@ flutter:
     - assets/jsons/
     - assets/svgs/
     - assets/lottie/
-    - assets/images/common/
-    - assets/images/icon/
-    - assets/images/loading/
-    - assets/images/template/
-    - assets/lib/
