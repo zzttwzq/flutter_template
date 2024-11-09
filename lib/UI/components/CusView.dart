@@ -9,16 +9,14 @@ class CusView extends State with WidgetsBindingObserver {
   var bgcolor;
   var elevation = 0.0;
   var navBarBackground = Colors.white;
-  var navBarTextTheme = const TextTheme(
-      headline6: TextStyle(
-          color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700));
+  var navBarTextTheme = const TextTheme();
   var navBarIconTheme = const IconThemeData(color: Colors.black);
 
   @override
   void initState() {
     super.initState();
 
-    this.getData();
+    getData();
 
     setState(() {
       customValue();

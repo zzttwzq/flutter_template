@@ -9,7 +9,7 @@ class ThemeConfig {
   static Color darkBG = Color(0xff121212);
 
   static ThemeData lightTheme = ThemeData(
-    backgroundColor: lightBG,
+    // backgroundColor: lightBG,
     primaryColor: lightPrimary,
     scaffoldBackgroundColor: lightBG,
     appBarTheme: AppBarTheme(
@@ -28,7 +28,7 @@ class ThemeConfig {
 
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
-    backgroundColor: darkBG,
+    // backgroundColor: darkBG,
     primaryColor: darkPrimary,
     scaffoldBackgroundColor: darkBG,
     appBarTheme: AppBarTheme(
