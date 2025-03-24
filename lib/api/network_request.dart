@@ -1,10 +1,8 @@
-// import 'dart:io';
 
-import 'package:dio/dio.dart';
+import 'package:flutterbase/flutterbase.dart';
+import 'package:flutterbase/utils/http_util.dart';
 
 import '../config/config.dart';
-import '../utils/http_util.dart';
-import '../utils/toast_util.dart';
 import 'custom_interceptor.dart';
 
 class NetworkRequest {
@@ -25,9 +23,9 @@ class NetworkRequest {
   NetworkRequest._internal() {
     if (_isInstanceCreated == false) {
       var options = BaseOptions(
-        baseUrl: Config.getBaseUrl(),
-        connectTimeout: Config.connectTimeout,
-        receiveTimeout: Config.requestTimeout,
+        // baseUrl: Config.getBaseUrl(),
+        // connectTimeout: Config.connectTimeout,
+        // receiveTimeout: Config.requestTimeout,
       );
       _dio = Dio(options);
 
@@ -167,10 +165,10 @@ class NetworkRequest {
         requestOptions: RequestOptions(
             path: path, method: method, queryParameters: params, data: data),
         response: response,
-        type: DioErrorType.response,
+        // type: DioErrorType.response,
       );
       if (e is DioError) {
-        err.type = e.type;
+        // err.type = e.type;
       }
 
       response.statusCode = err.response?.statusCode;
@@ -179,7 +177,7 @@ class NetworkRequest {
 
       onError?.call(response);
     }
-    ToastUtil.dismiss();
+    HudUtil.hide();
 
     return response;
   }

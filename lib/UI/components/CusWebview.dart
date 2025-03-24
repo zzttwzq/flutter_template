@@ -46,7 +46,6 @@ class CusWebviewState extends CusView {
 
   @override
   custView(context) {
-
     String sourceUrl = data['url'];
     print(sourceUrl);
 
@@ -57,35 +56,37 @@ class CusWebviewState extends CusView {
     if (isFromLocal) {
       url = '';
     } else {
-      if (sourceUrl.contains('http://') != true && sourceUrl.contains('https://') != true) {
+      if (sourceUrl.contains('http://') != true &&
+          sourceUrl.contains('https://') != true) {
         url = "http://$url";
       }
     }
 
     return Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.white,
-        child: WebView(
-            initialUrl: url,
-            javascriptMode: JavascriptMode.unrestricted,
-            onWebViewCreated: (WebViewController webViewController) {
-              _webViewController = webViewController;
-              if (isFromLocal) {
-                _loadHtmlFromAssets(sourceUrl);
-              }
-            },
-            onPageStarted: (url) {
-              stack.add(url);
-            }));
+      width: double.infinity,
+      height: double.infinity,
+      color: Colors.white,
+      // child: WebView(
+      //     initialUrl: url,
+      //     javascriptMode: JavascriptMode.unrestricted,
+      //     onWebViewCreated: (WebViewController webViewController) {
+      //       _webViewController = webViewController;
+      //       if (isFromLocal) {
+      //         _loadHtmlFromAssets(sourceUrl);
+      //       }
+      //     },
+      //     onPageStarted: (url) {
+      //       stack.add(url);
+      //     })
+    );
   }
 
   _loadHtmlFromAssets(url) async {
     print(url);
 
-    String fileHtmlContents = await rootBundle.loadString(url);
-    _webViewController.loadUrl(Uri.dataFromString(fileHtmlContents,
-            mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
-        .toString());
+    // String fileHtmlContents = await rootBundle.loadString(url);
+    // _webViewController.loadUrl(Uri.dataFromString(fileHtmlContents,
+    //         mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+    //     .toString());
   }
 }

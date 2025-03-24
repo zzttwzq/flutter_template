@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutterbase/flutterbase.dart';
 
-import '../utils/ui_util.dart';
 import 'color_const.dart';
 import 'font_const.dart';
 
 class StyleConst with BaseUiMixin {
 
-  static double sFontSize(double size) {
+  static double sFontSize1(double size) {
     // return ScreenUtil.getInstance().getSp(size);
     return size;
   }
@@ -15,12 +15,12 @@ class StyleConst with BaseUiMixin {
   //   return ScreenUtil.getInstance().getSp(fontSize);
   // }
 
-  static double tinyFont = sFontSize(6);
-  static double smallFont = sFontSize(8);
-  static double font_10 = sFontSize(10);
-  static double normalFont = sFontSize(15);
-  static double largeFont = sFontSize(20);
-  static double hugeFont = sFontSize(26);
+  static double tinyFont = sFontSize1(6);
+  static double smallFont = sFontSize1(8);
+  static double font_10 = sFontSize1(10);
+  static double normalFont = sFontSize1(15);
+  static double largeFont = sFontSize1(20);
+  static double hugeFont = sFontSize1(26);
 
   static TextStyle toastTextStyle = TextStyle(
       color: ColorConst.toastTextColor, fontSize: largeFont);

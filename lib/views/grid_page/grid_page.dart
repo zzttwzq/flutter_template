@@ -1,8 +1,8 @@
 import 'package:app/ui/custom_appbar.dart';
-import 'package:app/utils/ui_util.dart';
 import 'package:app/views/grid_page/grid_page_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterbase/flutterbase.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 

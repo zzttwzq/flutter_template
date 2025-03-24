@@ -7,13 +7,11 @@ import 'package:app/views/list_page/list_page.dart';
 import 'package:app/views/list_page/list_page_binding.dart';
 import 'package:app/views/login_page/login_page.dart';
 import 'package:app/views/login_page/login_page_binding.dart';
-import 'package:app/views/splash/splash_screen.dart';
 import 'package:get/get.dart';
 
 import '../views/home_page/home_page.dart';
 import '../views/mine_page/mine_page.dart';
 import '../views/mine_page/mine_page_binding.dart';
-import '../views/splash/splash_binding.dart';
 
 class AppRoute {
   static String initialRoute = homePage;
@@ -28,10 +26,10 @@ class AppRoute {
   static String providerTestPage = "/providerTestPage";
 
   static List<GetPage> pages = [
-    GetPage(
-        name: splashPage,
-        page: () => SplashScreen(),
-        bindings: [SplashBinding()]),
+    // GetPage(
+    //     name: splashPage,
+    //     page: () => SplashScreen(),
+    //     bindings: [SplashBinding()]),
     GetPage(
         name: loginPage,
         page: () => LoginPage(),

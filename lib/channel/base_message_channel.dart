@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:app/config/config.dart';
 import 'package:flutter/services.dart';
-import '../utils/c_log_util.dart';
+import 'package:flutterbase/flutterbase.dart';
 
 class PaintParamChannel {
   /// 定义方法渠道, deviceinfo必须和原生定义的一模一样.
@@ -13,7 +13,7 @@ class PaintParamChannel {
   /// 获取安卓版本
   static Future<String> getAndroidVerison() async {
     var d = await _channel.invokeMethod(getAndroidVersion);
-    LOG.d(">>>geAndroidVerison: ${d}");
+    LogUtil.debug(">>>geAndroidVerison: ${d}");
     return d;
   }
 
@@ -22,7 +22,7 @@ class PaintParamChannel {
     _channel.setMethodCallHandler(
           (call) {
 
-        LOG.d(">>> listenMethod ${call}");
+        LogUtil.debug(">>> listenMethod ${call}");
 
         //
         if (call.method == 'xxxx') {

@@ -1,7 +1,7 @@
 import 'package:app/ui/custom_appbar.dart';
-import 'package:app/utils/ui_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterbase/mixins/ui_mixin.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 

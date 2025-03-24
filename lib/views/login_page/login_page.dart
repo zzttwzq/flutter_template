@@ -1,11 +1,10 @@
 import 'package:app/ui/custom_appbar.dart';
 import 'package:app/const/image_const.dart';
-import 'package:app/utils/ui_util.dart';
 import 'package:app/views/components/text_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterbase/flutterbase.dart';
+import 'package:flutterbase/mixins/ui_mixin.dart';
 import 'package:get/get.dart';
-
-import '../../utils/toast_util.dart';
 
 class LoginPage extends GetView with BaseUiMixin {
   LoginPage({super.key});
@@ -35,7 +34,7 @@ class LoginPage extends GetView with BaseUiMixin {
                 TextButton(
                     onPressed: () {
                       if (formKey.currentState?.validate() ?? false) {
-                        ToastUtil.toast('校验成功');
+                        HudUtil.toast('校验成功');
                       }
                     },
                     child: Text('asdfasdf'))

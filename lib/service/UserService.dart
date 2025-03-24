@@ -1,5 +1,5 @@
 
-import '../utils/storage_util.dart';
+import 'package:flutterbase/utils/storage_util.dart';
 
 class UserService {
   static getUserInfo() async {

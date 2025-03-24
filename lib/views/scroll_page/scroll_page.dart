@@ -1,6 +1,6 @@
 import 'package:app/ui/custom_appbar.dart';
-import 'package:app/utils/ui_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterbase/mixins/ui_mixin.dart';
 import 'package:get/get.dart';
 
 class ScrollPage extends GetView with BaseUiMixin {

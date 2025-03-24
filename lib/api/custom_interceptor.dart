@@ -2,12 +2,11 @@ import 'dart:convert';
 import 'package:app/router/app_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutterbase/flutterbase.dart';
+import 'package:flutterbase/utils/http_util.dart';
 
 import '../config/config.dart';
 import '../localization/Translate.dart';
-import '../utils/c_log_util.dart';
-import '../utils/http_util.dart';
-import '../utils/toast_util.dart';
 
 class CustomInterceptor extends Interceptor {
   @override
@@ -24,22 +23,22 @@ class CustomInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
     if (Config.logRequest && kDebugMode) {
-      LOG.d('');
-      LOG.d('[=========== ${response.requestOptions.path} ==========]');
-      LOG.d('[ URL    ]：${response.requestOptions.baseUrl + response.requestOptions.path}');
-      LOG.d('[ METHOD ]：${response.requestOptions.method}');
-      LOG.d('[ HEADER ]：${json.encode(response.requestOptions.headers.toString())}');
-      LOG.d('[ PARAMS ]：${json.encode(response.requestOptions.queryParameters.toString())}');
+      LogUtil.debug('');
+      LogUtil.debug('[=========== ${response.requestOptions.path} ==========]');
+      LogUtil.debug('[ URL    ]：${response.requestOptions.baseUrl + response.requestOptions.path}');
+      LogUtil.debug('[ METHOD ]：${response.requestOptions.method}');
+      LogUtil.debug('[ HEADER ]：${json.encode(response.requestOptions.headers.toString())}');
+      LogUtil.debug('[ PARAMS ]：${json.encode(response.requestOptions.queryParameters.toString())}');
       var d = response.requestOptions.data;
       if (d is FormData) {
-        LOG.d('[ DATA  ]：${d.fields.toString()}');
+        LogUtil.debug('[ DATA  ]：${d.fields.toString()}');
       } else {
-        LOG.d('[ DATA  ]：${response.requestOptions.data.toString()}');
+        LogUtil.debug('[ DATA  ]：${response.requestOptions.data.toString()}');
       }
-      LOG.d('[ SUCCESS ]');
-      LOG.d('[ RESULT  ]：${json.encode(response.data.toString())}');
-      LOG.d('[========================================]');
-      LOG.d('');
+      LogUtil.debug('[ SUCCESS ]');
+      LogUtil.debug('[ RESULT  ]：${json.encode(response.data.toString())}');
+      LogUtil.debug('[========================================]');
+      LogUtil.debug('');
     }
 
     /// 可以在此处处理加密
@@ -62,7 +61,7 @@ class CustomInterceptor extends Interceptor {
       handler.next(response);
     } else {
       if (int.parse(response.data['code']) == 300) {
-        ToastUtil.toast(Translate.toastReLogin);
+        HudUtil.toast(Translate.cancel.tr);
         AppRoute.gotoPage(AppRoute.loginPage);
       }
 
@@ -75,7 +74,7 @@ class CustomInterceptor extends Interceptor {
           : "";
 
       if (msg.isNotEmpty) {
-        ToastUtil.error(msg);
+        HudUtil.error(msg);
       }
 
       handler.reject(
@@ -86,22 +85,22 @@ class CustomInterceptor extends Interceptor {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     if (Config.logRequest && kDebugMode) {
-      LOG.d('');
-      LOG.d('[=========== ${err.requestOptions.path} ==========]');
-      LOG.d('[ URL    ]：${err.requestOptions.baseUrl + err.requestOptions.path}');
-      LOG.d('[ METHOD ]：${err.requestOptions.method}');
-      LOG.d('[ HEADER ]：${json.encode(err.requestOptions.headers.toString())}');
-      LOG.d('[ PARAMS ]：${json.encode(err.requestOptions.queryParameters.toString())}');
+      LogUtil.debug('');
+      LogUtil.debug('[=========== ${err.requestOptions.path} ==========]');
+      LogUtil.debug('[ URL    ]：${err.requestOptions.baseUrl + err.requestOptions.path}');
+      LogUtil.debug('[ METHOD ]：${err.requestOptions.method}');
+      LogUtil.debug('[ HEADER ]：${json.encode(err.requestOptions.headers.toString())}');
+      LogUtil.debug('[ PARAMS ]：${json.encode(err.requestOptions.queryParameters.toString())}');
       var d = err.requestOptions.data;
       if (d is FormData) {
-        LOG.d('[ DATA  ]：${d.fields.toString()}');
+        LogUtil.debug('[ DATA  ]：${d.fields.toString()}');
       } else {
-        LOG.d('[ DATA  ]：${err.requestOptions.data.toString()}');
+        LogUtil.debug('[ DATA  ]：${err.requestOptions.data.toString()}');
       }
-      LOG.d('[ *ERROR* ]');
-      LOG.d('[ ERROR  ]：${err}');
-      LOG.d('[========================================]');
-      LOG.d('');
+      LogUtil.debug('[ *ERROR* ]');
+      LogUtil.debug('[ ERROR  ]：${err}');
+      LogUtil.debug('[========================================]');
+      LogUtil.debug('');
     }
 
     /// 公共处理失败请求

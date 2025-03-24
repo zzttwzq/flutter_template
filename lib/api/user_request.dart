@@ -1,7 +1,6 @@
 import 'package:app/api/network_request.dart';
 import 'package:dio/dio.dart';
 
-import '../utils/storage_util.dart';
 import 'api_url.dart';
 
 /// 用户相关接口

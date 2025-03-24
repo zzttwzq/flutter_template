@@ -1,5 +1,4 @@
 import 'package:app/ui/custom_appbar.dart';
-import 'package:app/utils/ui_util.dart';
 import 'package:app/views/grid_page/grid_page.dart';
 import 'package:app/views/home_page/home_page.dart';
 import 'package:app/views/index_page/index_page_controller.dart';
@@ -7,6 +6,7 @@ import 'package:app/views/list_page/list_page.dart';
 import 'package:app/views/mine_page/mine_page.dart';
 import 'package:app/views/scroll_page/scroll_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterbase/mixins/ui_mixin.dart';
 import 'package:get/get.dart';
 
 // class IndexPage extends GetView with BaseUiMixin {
