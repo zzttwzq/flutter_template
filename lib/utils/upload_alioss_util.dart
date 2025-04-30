@@ -5,17 +5,17 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 
 class UploadAliossUtil {
-  static String ossAccessKeyId = 'LTAI5tPtL7dUHsMMH4P5AH2c';
+  static String ossAccessKeyId = '';
 
-  static String ossAccessKeySecret = '6uR4NtpncKwfNhwEFAjYjeoaW6eE4M';
+  static String ossAccessKeySecret = '';
   // oss设置的bucket的名字
-  static String bucket = 'bucketName';
+  static String bucket = '';
 
   // 发送请求的url,根据你自己设置的是哪个城市的
-  static String url = 'https://private.nearhub.cc';
+  static String url = '';
 
   // 过期时间
-  static String expiration = '2025-01-01T12:00:00.000Z';
+  static String expiration = '';
 
   /**
    * @params file 要上传的文件对象

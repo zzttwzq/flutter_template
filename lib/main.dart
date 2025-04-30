@@ -1,140 +1,471 @@
-// import 'package:app/views/app.dart';
-// import 'package:flutter/material.dart';
 
-// void main() {
-//   WidgetsFlutterBinding.ensureInitialized();
-
-//   FlutterError.onError = (FlutterErrorDetails details) async {
-//     debugPrint('>>> ${details.toString()}');
-//   };
-
-//   runApp(App());
-// }
-
-
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
+import 'package:cubixd/cubixd.dart';
+import 'package:vector_math/vector_math_64.dart' show Vector2;
+import 'dart:math' as math;
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '视频水印工具',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: VideoWatermarkPage(),
+      title: 'Flutter CubixD 手势控制演示',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: CubixDDemo(),
     );
   }
 }
 
-class VideoWatermarkPage extends StatefulWidget {
+class CubixDDemo extends StatefulWidget {
   @override
-  _VideoWatermarkPageState createState() => _VideoWatermarkPageState();
+  _CubixDDemoState createState() => _CubixDDemoState();
 }
 
-class _VideoWatermarkPageState extends State<VideoWatermarkPage> {
-  File? _selectedVideo;
-  bool _isProcessing = false;
-  final FlutterFFmpeg _flutterFFmpeg = FlutterFFmpeg();
+class _CubixDDemoState extends State<CubixDDemo> with TickerProviderStateMixin {
+  String currentSide = "front";
+  Vector2 cubeRotation = Vector2(0, 0);
+  Offset? _startPosition;
 
-  // 选择本地视频文件
-  Future<void> _pickVideo() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.video,
-      allowMultiple: false,
+  // 动画控制器
+  late AnimationController _rotationController;
+  late AnimationController _translationController;
+
+  // 动画
+  late Animation<Vector2> _rotationAnimation;
+  late Animation<Vector2> _translationAnimation;
+  late Animation<double> _opacityAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 旋转动画控制器
+    _rotationController = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: 300)
     );
 
-    if (result != null && result.files.single.path != null) {
+    // 平移动画控制器
+    _translationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+    );
+
+    // 初始化动画
+    _rotationAnimation = AlwaysStoppedAnimation(Vector2(0, 0));
+    _translationAnimation = AlwaysStoppedAnimation(Vector2(0, 0));
+    _opacityAnimation = AlwaysStoppedAnimation(1.0);
+
+    // 添加监听器
+    _rotationController.addListener(() {
       setState(() {
-        _selectedVideo = File(result.files.single.path!);
+        cubeRotation = _rotationAnimation.value;
       });
-    }
+    });
   }
 
-  // 添加水印并保存
-  Future<void> _addWatermark() async {
-    if (_selectedVideo == null) return;
+  @override
+  void dispose() {
+    _rotationController.dispose();
+    _translationController.dispose();
+    super.dispose();
+  }
 
-    // 请求存储权限
-    if (!await _requestPermissions()) return;
+  // 旋转立方体到指定面
+  void _rotateCubeTo(String targetSide) {
+    Vector2 targetRotation;
+    switch (targetSide) {
+      case "front":
+        targetRotation = Vector2(0, 0);
+        break;
+      case "back":
+        targetRotation = Vector2(0, math.pi);
+        break;
+      case "left":
+        targetRotation = Vector2(0, -math.pi/2);
+        break;
+      case "right":
+        targetRotation = Vector2(0, math.pi/2);
+        break;
+      case "top":
+        targetRotation = Vector2(-math.pi/2, 0);
+        break;
+      case "bottom":
+        targetRotation = Vector2(math.pi/2, 0);
+        break;
+      default:
+        targetRotation = Vector2(0, 0);
+    }
 
-    setState(() => _isProcessing = true);
+    // 创建旋转动画
+    _rotationAnimation = Vector2Tween(
+      begin: cubeRotation,
+      end: targetRotation,
+    ).animate(CurvedAnimation(
+      parent: _rotationController,
+      curve: Curves.easeInOut,
+    ));
 
-    try {
-      // 获取输出路径
-      final appDir = await getApplicationDocumentsDirectory();
-      final outputPath = '${appDir.path}/watermarked_${DateTime.now().millisecondsSinceEpoch}.mp4';
+    _rotationController.reset();
+    _rotationController.forward().then((_) {
+      setState(() {
+        currentSide = targetSide;
+      });
+    });
+  }
 
-      // FFmpeg 水印命令
-      final command = '''
-      -i "${_selectedVideo!.path}" 
-      -vf "drawtext=text='My Watermark':fontcolor=white:fontsize=24:box=1:boxcolor=black@0.5:x=10:y=10" 
-      -c:a copy 
-      "$outputPath"
-      ''';
-
-      // 执行FFmpeg命令
-      final rc = await _flutterFFmpeg.execute(command);
-      
-      if (rc == 0) {
-        _showResult('保存成功: $outputPath');
-      } else {
-        _showResult('处理失败，错误码: $rc');
+  // 根据滑动确定目标面
+  String _getTargetFace(String direction) {
+    Map<String, Map<String, String>> navigationMap = {
+      "front": {
+        "up": "top",
+        "down": "bottom",
+        "left": "left",
+        "right": "right"
+      },
+      "back": {
+        "up": "top",
+        "down": "bottom",
+        "left": "right",
+        "right": "left"
+      },
+      "left": {
+        "up": "top",
+        "down": "bottom",
+        "left": "back",
+        "right": "front"
+      },
+      "right": {
+        "up": "top",
+        "down": "bottom",
+        "left": "front",
+        "right": "back"
+      },
+      "top": {
+        "up": "back",
+        "down": "front",
+        "left": "left",
+        "right": "right"
+      },
+      "bottom": {
+        "up": "front",
+        "down": "back",
+        "left": "left",
+        "right": "right"
       }
-    } catch (e) {
-      _showResult('发生错误: $e');
-    } finally {
-      setState(() => _isProcessing = false);
+    };
+
+    // 如果当前面和方向都存在于映射中，返回目标面
+    if (navigationMap.containsKey(currentSide) &&
+        navigationMap[currentSide]!.containsKey(direction)) {
+      return navigationMap[currentSide]![direction]!;
     }
+
+    // 默认返回当前面
+    return currentSide;
   }
 
-  // 权限请求
-  Future<bool> _requestPermissions() async {
-    final status = await Permission.storage.request();
-    return status.isGranted;
+  // 平移方法 - 水平方向
+  void _translateHorizontal(bool toRight) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // 第一阶段：移出屏幕
+    _translationAnimation = Tween<Vector2>(
+      begin: Vector2(0, 0),
+      end: Vector2(toRight ? screenWidth : -screenWidth, 0),
+    ).animate(CurvedAnimation(
+      parent: _translationController,
+      curve: Interval(0, 0.5, curve: Curves.easeInOut),
+    ));
+
+    _opacityAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.0,
+    ).animate(CurvedAnimation(
+      parent: _translationController,
+      curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn),
+    ));
+
+    _translationController.reset();
+    _translationController.forward().then((_) {
+      // 第二阶段：从反方向进入
+      _translationAnimation = Tween<Vector2>(
+        begin: Vector2(toRight ? -screenWidth : screenWidth, 0),
+        end: Vector2(0, 0),
+      ).animate(CurvedAnimation(
+        parent: _translationController,
+        curve: Interval(0.5, 1.0, curve: Curves.easeOutQuad),
+      ));
+
+      _opacityAnimation = Tween<double>(
+        begin: 0.0,
+        end: 1.0,
+      ).animate(CurvedAnimation(
+        parent: _translationController,
+        curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn),
+      ));
+
+      _translationController.reset();
+      _translationController.forward();
+    });
   }
 
-  // 显示处理结果
-  void _showResult(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message))
-    );
+  // 平移方法 - 垂直方向
+  void _translateVertical(bool toBottom) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    _translationAnimation = Tween<Vector2>(
+      begin: Vector2(0, 0),
+      end: Vector2(0, toBottom ? screenHeight : -screenHeight),
+    ).animate(CurvedAnimation(
+      parent: _translationController,
+      curve: Interval(0, 0.5, curve: Curves.easeInOut),
+    ));
+
+    _opacityAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.0,
+    ).animate(CurvedAnimation(
+      parent: _translationController,
+      curve: Interval(0, 0.5, curve: Curves.fastOutSlowIn),
+    ));
+
+    _translationController.reset();
+    _translationController.forward().then((_) {
+      _translationAnimation = Tween<Vector2>(
+        begin: Vector2(0, toBottom ? -screenHeight : screenHeight),
+        end: Vector2(0, 0),
+      ).animate(CurvedAnimation(
+        parent: _translationController,
+        curve: Interval(0.5, 1.0, curve: Curves.easeOutQuad),
+      ));
+
+      _opacityAnimation = Tween<double>(
+        begin: 0.0,
+        end: 1.0,
+      ).animate(CurvedAnimation(
+        parent: _translationController,
+        curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn),
+      ));
+
+      _translationController.reset();
+      _translationController.forward();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('视频水印工具')),
+      appBar: AppBar(
+        title: Text('CubixD 手势控制演示'),
+      ),
       body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (_selectedVideo != null)
-                Text('已选择文件: ${_selectedVideo!.path.split('/').last}'),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _isProcessing ? null : _pickVideo,
-                child: Text('选择视频文件'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('当前面: $currentSide',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            SizedBox(height: 20),
+
+            GestureDetector(
+              onVerticalDragStart: (details) {
+                _startPosition = details.globalPosition;
+                if (_rotationController.isAnimating) {
+                  _rotationController.stop();
+                }
+              },
+              onVerticalDragEnd: (details) {
+                if (_startPosition == null) return;
+
+                // 垂直滑动的方向
+                final vertical = details.velocity.pixelsPerSecond.dy;
+
+                // 根据滑动速度判断方向
+                String direction;
+                if (vertical > 0) {
+                  direction = "down"; // 向下滑动
+                } else {
+                  direction = "up"; // 向上滑动
+                }
+
+                // 根据当前面和滑动方向确定目标面
+                String targetFace = _getTargetFace(direction);
+                _rotateCubeTo(targetFace);
+
+                _startPosition = null;
+              },
+              onHorizontalDragStart: (details) {
+                _startPosition = details.globalPosition;
+                if (_rotationController.isAnimating) {
+                  _rotationController.stop();
+                }
+              },
+              onHorizontalDragEnd: (details) {
+                if (_startPosition == null) return;
+
+                // 水平滑动的方向
+                final horizontal = details.velocity.pixelsPerSecond.dx;
+
+                // 根据滑动速度判断方向
+                String direction;
+                if (horizontal > 0) {
+                  direction = "right"; // 向右滑动
+                } else {
+                  direction = "left"; // 向左滑动
+                }
+
+                // 根据当前面和滑动方向确定目标面
+                String targetFace = _getTargetFace(direction);
+                _rotateCubeTo(targetFace);
+
+                _startPosition = null;
+              },
+              child: AnimatedBuilder(
+                animation: Listenable.merge([
+                  _rotationController,
+                  _translationController
+                ]),
+                builder: (context, child) {
+                  return Transform.translate(
+                    offset: Offset(
+                        _translationAnimation.value.x,
+                        _translationAnimation.value.y
+                    ),
+                    child: Opacity(
+                      opacity: _opacityAnimation.value,
+                      child: CubixD(
+                        size: 260.0,
+                        delta: cubeRotation,
+                        sensitivityFac: 0.01,
+                        front: _buildCubeFace(Colors.red, '前'),
+                        back: _buildCubeFace(Colors.blue, '后'),
+                        left: _buildCubeFace(Colors.green, '左'),
+                        right: _buildCubeFace(Colors.yellow, '右'),
+                        top: _buildCubeFace(Colors.purple, '上'),
+                        bottom: _buildCubeFace(Colors.orange, '下'),
+                      ),
+                    ),
+                  );
+                },
               ),
-              SizedBox(height: 20),
-              if (_isProcessing)
-                CircularProgressIndicator()
-              else
-                ElevatedButton(
-                  onPressed: _selectedVideo != null ? _addWatermark : null,
-                  child: Text('添加水印并保存'),
+            ),
+
+            SizedBox(height: 30),
+
+            // 手动控制和平移按钮
+            Column(
+              children: [
+                // 旋转按钮
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => _rotateCubeTo('front'),
+                      child: Text('正面'),
+                    ),
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () => _rotateCubeTo('back'),
+                      child: Text('背面'),
+                    ),
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () => _rotateCubeTo('left'),
+                      child: Text('左面'),
+                    ),
+                    SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () => _rotateCubeTo('right'),
+                      child: Text('右面'),
+                    ),
+                  ],
                 ),
+
+                SizedBox(height: 20),
+
+                // 平移按钮
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () => _translateHorizontal(false),
+                          child: Text('左移'),
+                        ),
+                        SizedBox(width: 20),
+                        ElevatedButton(
+                          onPressed: () => _translateHorizontal(true),
+                          child: Text('右移'),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () => _translateVertical(false),
+                          child: Text('上移'),
+                        ),
+                        SizedBox(width: 20),
+                        ElevatedButton(
+                          onPressed: () => _translateVertical(true),
+                          child: Text('下移'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // 创建立方体的每个面
+  Widget _buildCubeFace(Color color, String faceName) {
+    return Container(
+      color: color,
+      child: Center(
+        child: Text(
+          faceName,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            shadows: [
+              Shadow(
+                color: Colors.black54,
+                offset: Offset(1, 1),
+                blurRadius: 3,
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+// 自定义Tween用于Vector2动画插值
+class Vector2Tween extends Tween<Vector2> {
+  Vector2Tween({required Vector2 begin, required Vector2 end})
+      : super(begin: begin, end: end);
+
+  @override
+  Vector2 lerp(double t) {
+    return Vector2(
+      begin!.x + (end!.x - begin!.x) * t,
+      begin!.y + (end!.y - begin!.y) * t,
     );
   }
 }
